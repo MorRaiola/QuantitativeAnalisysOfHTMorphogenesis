@@ -69,91 +69,116 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
 
 ### 1. Estimating Individual Live Image Motion
 
-#### 1.1 Image Preprocessing
-**Script:** [Preprocessing.m](./1.EstimatingIndividualLiveImageMotion/Preprocessing.m)
+<details>
+  <summary><strong>1.1 Image Preprocessing</strong></summary>
+  **Script:** [Preprocessing.m](./1.EstimatingIndividualLiveImageMotion/Preprocessing.m)
 
-This step involves preprocessing 3D+t images:
-- Loading images via MIJ (MATLAB-ImageJ).
-- Applying Gaussian and Median filtering (if required).
-- Cropping and resizing images (down to 25%).
-- Reslicing volumes starting from the left side using Fiji.
+  This step involves preprocessing 3D+t images:
+  - Loading images via MIJ (MATLAB-ImageJ).
+  - Applying Gaussian and Median filtering (if required).
+  - Cropping and resizing images (down to 25%).
+  - Reslicing volumes starting from the left side using Fiji.
+</details>
 
-#### 1.2 MIRT Algorithm
-**Script:** [MIRT.m](./1.EstimatingIndividualLiveImageMotion/MIRT.m)
+<details>
+  <summary><strong>1.2 MIRT Algorithm</strong></summary>
+  **Script:** [MIRT.m](./1.EstimatingIndividualLiveImageMotion/MIRT.m)
 
-In this step, live images are registered using the MIRT3D algorithm:
-- Registration begins from the midpoint (N/2) of the time series (N = number of frames).
-- Outputs transformation sets to warp images sequentially.
+  In this step, live images are registered using the MIRT3D algorithm:
+  - Registration begins from the midpoint (N/2) of the time series (N = number of frames).
+  - Outputs transformation sets to warp images sequentially.
+</details>
 
-#### 1.3 HT Segmentation
-- Segment heart tissues using ITK-SNAP and convert processed `.tif` images to `.mha` format using the 3D IO ImageJ plugin.
-  - **Myocardium:** Label = 1
-  - **Splanchnic Mesoderm:** Label = 2 (linked in the middle)
-  - **Endoderm:** Label = 3
-- Export segmented images as NIFTI (`.nii.gz`) and reslice from the left using ImageJ, then save as `.tif`.
+<details>
+  <summary><strong>1.3 HT Segmentation</strong></summary>
+  - Segment heart tissues using ITK-SNAP and convert processed `.tif` images to `.mha` format using the 3D IO ImageJ plugin.
+    - **Myocardium:** Label = 1
+    - **Splanchnic Mesoderm:** Label = 2 (linked in the middle)
+    - **Endoderm:** Label = 3
+  - Export segmented images as NIFTI (`.nii.gz`) and reslice from the left using ImageJ, then save as `.tif`.
+</details>
 
-#### 1.4 Continuous Description of HT Morphogenesis
-**Script:** [ContinuousHTMorphogenesis.m](./1.EstimatingIndividualLiveImageMotion/ContinuousHTMorphogenesis.m)
+<details>
+  <summary><strong>1.4 Continuous Description of HT Morphogenesis</strong></summary>
+  **Script:** [ContinuousHTMorphogenesis.m](./1.EstimatingIndividualLiveImageMotion/ContinuousHTMorphogenesis.m)
 
-This script creates a continuous description of HT morphogenesis:
-- Generate triangular meshes from the segmented heart tissue using the Iso2mesh toolbox.
-- Interpolate the mesh at time point T(N/2), both backward and forward in time, to produce a 3D+t mesh sequence describing continuous morphogenesis.
+  This script creates a continuous description of HT morphogenesis:
+  - Generate triangular meshes from the segmented heart tissue using the Iso2mesh toolbox.
+  - Interpolate the mesh at time point T(N/2), both backward and forward in time, to produce a 3D+t mesh sequence describing continuous morphogenesis.
+</details>
 
-#### 1.5 Validating Motion Estimation
-**Script:** [Error1.m](./1.EstimatingIndividualLiveImageMotion/Error1.m)
+<details>
+  <summary><strong>1.5 Validating Motion Estimation</strong></summary>
+  **Script:** [Error1.m](./1.EstimatingIndividualLiveImageMotion/Error1.m)
 
-This script evaluates the accuracy of motion estimation:
-- Compare manual tracking (ground truth) with the propagated tracking (punctual and sequential test sets).
-- Calculate the error in micrometers (µm) as the Eulerian distance.
+  This script evaluates the accuracy of motion estimation:
+  - Compare manual tracking (ground truth) with the propagated tracking (punctual and sequential test sets).
+  - Calculate the error in micrometers (µm) as the Eulerian distance.
+</details>
 
-#### 1.6 Validating HT Morphogenesis Description
-**Script:** [Error2.m](./1.EstimatingIndividualLiveImageMotion/Error2.m)
+<details>
+  <summary><strong>1.6 Validating HT Morphogenesis Description</strong></summary>
+  **Script:** [Error2.m](./1.EstimatingIndividualLiveImageMotion/Error2.m)
 
-This script validates the accuracy of tracking cell division during morphogenesis:
-- Segment eight dividing cells during the morphogenesis of embryo e02 using ITK-SNAP.
-- Convert the segmented cells into meshes, and reshape the segmentation as in step 4.
-- Compare the direction of cell division by fitting lines to the vertices of the 3D mesh and using the cosine similarity function.
+  This script validates the accuracy of tracking cell division during morphogenesis:
+  - Segment eight dividing cells during the morphogenesis of embryo e02 using ITK-SNAP.
+  - Convert the segmented cells into meshes, and reshape the segmentation as in step 4.
+  - Compare the direction of cell division by fitting lines to the vertices of the 3D mesh and using the cosine similarity function.
+</details>
 
 ### 2. Integrating Multiple Live Images into a Consensus Temporal Reference
 
-#### 2.1 Staging System
+<details>
+  <summary><strong>2.1 Staging System</strong></summary>
 
-##### 2.1.1 Morphometric Feature Definition
-**Script:** [FeatureExtraction.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/FeatureExtraction.m)
+  <details>
+    <summary><strong>2.1.1 Morphometric Feature Definition</strong></summary>
+    **Script:** [FeatureExtraction.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/FeatureExtraction.m)
 
-- Manually select the points pt1-pt2-pt3-pt4 following the rules reported in the manuscript.
-- Compute the Eulerian distances between the points, followed by the height/width (h/w) computation.
+    - Manually select the points pt1-pt2-pt3-pt4 following the rules reported in the manuscript.
+    - Compute the Eulerian distances between the points, followed by the height/width (h/w) computation.
+  </details>
 
-##### 2.1.2 Staging System Modeling
-**Script:** [StagingSystem.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/StagingSystem.m)
+  <details>
+    <summary><strong>2.1.2 Staging System Modeling</strong></summary>
+    **Script:** [StagingSystem.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/StagingSystem.m)
 
-- Build a Gaussian Naive Bayesian classifier on h/w Atlas features.
-- Predict the staging grade (Gr) for each frame of each live image.
-- Among different equal-staged frames, consider only the one with the highest probability.
+    - Build a Gaussian Naive Bayesian classifier on h/w Atlas features.
+    - Predict the staging grade (Gr) for each frame of each live image.
+    - Among different equal-staged frames, consider only the one with the highest probability.
+  </details>
 
-#### 2.2 Spatial Mapping
-**Script:** [SpatialMapping.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/SpatialMapping.m)
+</details>
 
-1. Perform rigid registration of Atlas to live-shape using the TGMM algorithm.
-2. Manually cut Atlas missing parts in MeshLab (`(*)_Cut.ply`) and fill gaps in MeshLab (`(*)_Cut.ply`).
-3. Mask Atlas by creating the `ATLAS_Cut` mask with the `surf2volz` function, recreating a binary image with the same size as the live-shape mask.
-4. Import the segmentation into Fiji, manually fill gaps, and close holes to transition from surface segmentation to whole segmentation (`Fill_(*).tif`).
-5. Mask the live-shape, creating it with continuous HT description (image).
-6. Select only staged frames from the live-shape mask.
-7. Perform non-rigid registration with MIRT, transforming the live-shape mask into the `ATLAS_Cut` mask. The output is the deformed live-shape mask and the transformation T.
-8. Morph the live-shape into the Atlas, aligning the live-shape point cloud onto the Atlas mask edge. Output `SurfaceMap`.
-9. Perform face-to-face matching between live-shape and `ATLAS_Cut`. Return `IdxCUT.mat` (closest point in Atlas for each point in `ATLAS_Cut`) and `IdxMatch.mat` (closest point in Mapped for each point in Atlas (`IdxCut`)).
+<details>
+  <summary><strong>2.2 Spatial Mapping</strong></summary>
+  **Script:** [SpatialMapping.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/SpatialMapping.m)
 
-##### 2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape
-**Script:** [Validation.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/Validation.m)
+  1. Perform rigid registration of Atlas to live-shape using the TGMM algorithm.
+  2. Manually cut Atlas missing parts in MeshLab (`(*)_Cut.ply`) and fill gaps in MeshLab (`(*)_Cut.ply`).
+  3. Mask Atlas by creating the `ATLAS_Cut` mask with the `surf2volz` function, recreating a binary image with the same size as the live-shape mask.
+  4. Import the segmentation into Fiji, manually fill gaps, and close holes to transition from surface segmentation to whole segmentation (`Fill_(*).tif`).
+  5. Mask the live-shape, creating it with continuous HT description (image).
+  6. Select only staged frames from the live-shape mask.
+  7. Perform non-rigid registration with MIRT, transforming the live-shape mask into the `ATLAS_Cut` mask. The output is the deformed live-shape mask and the transformation T.
+  8. Morph the live-shape into the Atlas, aligning the live-shape point cloud onto the Atlas mask edge. Output `SurfaceMap`.
+  9. Perform face-to-face matching between live-shape and `ATLAS_Cut`. Return `IdxCUT.mat` (closest point in Atlas for each point in `ATLAS_Cut`) and `IdxMatch.mat` (closest point in Mapped for each point in Atlas (`IdxCut`)).
+</details>
 
-- Validate spatial correspondences between Atlas and live-shape.
-- Compute the live-shape area mesh and map face-to-face values into the Atlas.
+<details>
+  <summary><strong>2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape</strong></summary>
+  **Script:** [Validation.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/Validation.m)
+
+  - Validate spatial correspondences between Atlas and live-shape.
+  - Compute the live-shape area mesh and map face-to-face values into the Atlas.
+</details>
 
 ### 3. Extracting Tissue Deformation
 
-#### 3.1 Individual Tissue Deformation
-**Script:** [ExtractingTissueDeformation.m](./3.QuantifyingTissueDeformation/ExtractingTissueDeformation.m)
+<details>
+  <summary><strong>3.1 Individual Tissue Deformation</strong></summary>
+  **Script:** [ExtractingTissueDeformation.m](./3.QuantifyingTissueDeformation/ExtractingTissueDeformation.m)
 
-Extract the mesh deformation between the rest and deformed...
+  Extract the mesh deformation between the rest and deformed...
+</details>
 
