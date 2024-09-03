@@ -70,7 +70,7 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
 ### 1. Estimating Individual Live Image Motion
 
 #### 1.1 Image Preprocessing
-**Script:** [Preprocessing.m](./path/to/Preprocessing.m)
+**Script:** [Preprocessing.m](./1.EstimatingIndividualLiveImageMotion/Preprocessing.m)
 
 This step involves preprocessing 3D+t images:
 - Loading images via MIJ (MATLAB-ImageJ).
@@ -79,7 +79,7 @@ This step involves preprocessing 3D+t images:
 - Reslicing volumes starting from the left side using Fiji.
 
 #### 1.2 MIRT Algorithm
-**Script:** [MIRT.m](./path/to/MIRT.m)
+**Script:** [MIRT.m](./1.EstimatingIndividualLiveImageMotion/MIRT.m)
 
 In this step, live images are registered using the MIRT3D algorithm:
 - Registration begins from the midpoint (N/2) of the time series (N = number of frames).
@@ -93,21 +93,21 @@ In this step, live images are registered using the MIRT3D algorithm:
 - Export segmented images as NIFTI (`.nii.gz`) and reslice from the left using ImageJ, then save as `.tif`.
 
 #### 1.4 Continuous Description of HT Morphogenesis
-**Script:** [ContinuousHTMorphogenesis.m](./path/to/ContinuousHTMorphogenesis.m)
+**Script:** [ContinuousHTMorphogenesis.m](./1.EstimatingIndividualLiveImageMotion/ContinuousHTMorphogenesis.m)
 
 This script creates a continuous description of HT morphogenesis:
 - Generate triangular meshes from the segmented heart tissue using the Iso2mesh toolbox.
 - Interpolate the mesh at time point T(N/2), both backward and forward in time, to produce a 3D+t mesh sequence describing continuous morphogenesis.
 
 #### 1.5 Validating Motion Estimation
-**Script:** [Error1.m](./path/to/Error1.m)
+**Script:** [Error1.m](./1.EstimatingIndividualLiveImageMotion/Error1.m)
 
 This script evaluates the accuracy of motion estimation:
 - Compare manual tracking (ground truth) with the propagated tracking (punctual and sequential test sets).
 - Calculate the error in micrometers (µm) as the Eulerian distance.
 
 #### 1.6 Validating HT Morphogenesis Description
-**Script:** [Error2.m](./path/to/Error2.m)
+**Script:** [Error2.m](./1.EstimatingIndividualLiveImageMotion/Error2.m)
 
 This script validates the accuracy of tracking cell division during morphogenesis:
 - Segment eight dividing cells during the morphogenesis of embryo e02 using ITK-SNAP.
@@ -119,20 +119,20 @@ This script validates the accuracy of tracking cell division during morphogenesi
 #### 2.1 Staging System
 
 ##### 2.1.1 Morphometric Feature Definition
-**Script:** [FeatureExtraction.m](./path/to/FeatureExtraction.m)
+**Script:** [FeatureExtraction.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/FeatureExtraction.m)
 
 - Manually select the points pt1-pt2-pt3-pt4 following the rules reported in the manuscript.
 - Compute the Eulerian distances between the points, followed by the height/width (h/w) computation.
 
 ##### 2.1.2 Staging System Modeling
-**Script:** [StagingSystem.m](./path/to/StagingSystem.m)
+**Script:** [StagingSystem.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/StagingSystem.m)
 
 - Build a Gaussian Naive Bayesian classifier on h/w Atlas features.
 - Predict the staging grade (Gr) for each frame of each live image.
 - Among different equal-staged frames, consider only the one with the highest probability.
 
 #### 2.2 Spatial Mapping
-**Script:** [SpatialMapping.m](./path/to/SpatialMapping.m)
+**Script:** [SpatialMapping.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/SpatialMapping.m)
 
 1. Perform rigid registration of Atlas to live-shape using the TGMM algorithm.
 2. Manually cut Atlas missing parts in MeshLab (`(*)_Cut.ply`) and fill gaps in MeshLab (`(*)_Cut.ply`).
@@ -145,7 +145,7 @@ This script validates the accuracy of tracking cell division during morphogenesi
 9. Perform face-to-face matching between live-shape and `ATLAS_Cut`. Return `IdxCUT.mat` (closest point in Atlas for each point in `ATLAS_Cut`) and `IdxMatch.mat` (closest point in Mapped for each point in Atlas (`IdxCut`)).
 
 ##### 2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape
-**Script:** [Validation.m](./path/to/Validation.m)
+**Script:** [Validation.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/Validation.m)
 
 - Validate spatial correspondences between Atlas and live-shape.
 - Compute the live-shape area mesh and map face-to-face values into the Atlas.
@@ -153,7 +153,7 @@ This script validates the accuracy of tracking cell division during morphogenesi
 ### 3. Extracting Tissue Deformation
 
 #### 3.1 Individual Tissue Deformation
-**Script:** [ExtractingTissueDeformation.m](./path/to/ExtractingTissueDeformation.m)
+**Script:** [ExtractingTissueDeformation.m](./3.QuantifyingTissueDeformation/ExtractingTissueDeformation.m)
 
 Extract the mesh deformation between the rest and deformed...
 
