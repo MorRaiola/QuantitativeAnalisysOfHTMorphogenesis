@@ -2,7 +2,7 @@
 
 This repository contains the MATLAB 2023b implementation of a workflow designed to analyze and validate myocardial motion and deformation during heart tissue (HT) morphogenesis.
 
-**Paper:** *A method for analyzing myocardial motion and deformation during early mouse morphogenesis* (Raiola M et al., 20**)
+**Paper:** *A Method for Analyzing Myocardial Motion and Deformation During Early Mouse Morphogenesis* (Raiola M et al., 20**)
 
 ## Quick Overview
 
@@ -46,7 +46,6 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
   </ul>
 </details>
 
-
 ## Requirements
 
 ### Software
@@ -59,7 +58,7 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
 - MIRT Toolbox
 - [Saveastiff Toolbox](https://es.mathworks.com/matlabcentral/fileexchange/35684-multipage-tiff-stack)
 - [Iso2mesh Toolbox](https://iso2mesh.sourceforge.net/cgi-bin/index.cgi)
-- [Toolbox\_graph](https://github.com/gpeyre/matlab-toolboxes/tree/master/toolbox_graph)
+- [Toolbox_graph](https://github.com/gpeyre/matlab-toolboxes/tree/master/toolbox_graph)
 - [Geom3d Toolbox](https://es.mathworks.com/matlabcentral/fileexchange/24484-geom3d)
 - [Groupwise Registration Toolbox](https://es.mathworks.com/matlabcentral/fileexchange/63693-robust-group-wise-registration-of-point-sets-using-multi-resolution-t-mixture-model)
 - [Meshesd](https://github.com/mattools/matGeom)
@@ -67,9 +66,11 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
 - [ObjWriter](https://github.com/JBKacerovsky/objWriter?tab=readme-ov-file)
 
 ## Workflow Overview
-## 1. Estimating Individual Live Image Motion
-### 1.1 Image Preproccesing
-**Script:** `Preprocesing.m`
+
+### 1. Estimating Individual Live Image Motion
+
+#### 1.1 Image Preprocessing
+**Script:** [Preprocessing.m](./path/to/Preprocessing.m)
 
 This step involves preprocessing 3D+t images:
 - Loading images via MIJ (MATLAB-ImageJ).
@@ -77,79 +78,82 @@ This step involves preprocessing 3D+t images:
 - Cropping and resizing images (down to 25%).
 - Reslicing volumes starting from the left side using Fiji.
 
-### 1.2 MIRT algorithm
-**Script:** `MIRT.m`
+#### 1.2 MIRT Algorithm
+**Script:** [MIRT.m](./path/to/MIRT.m)
 
 In this step, live images are registered using the MIRT3D algorithm:
 - Registration begins from the midpoint (N/2) of the time series (N = number of frames).
 - Outputs transformation sets to warp images sequentially.
 
-### 1.3 HT Segmentation
+#### 1.3 HT Segmentation
 - Segment heart tissues using ITK-SNAP and convert processed `.tif` images to `.mha` format using the 3D IO ImageJ plugin.
   - **Myocardium:** Label = 1
   - **Splanchnic Mesoderm:** Label = 2 (linked in the middle)
   - **Endoderm:** Label = 3
 - Export segmented images as NIFTI (`.nii.gz`) and reslice from the left using ImageJ, then save as `.tif`.
 
-### 1.4 Continuous Description of HT Morphogenesis
-**Script:** `ContinuousHTMorphogenesis.m`
+#### 1.4 Continuous Description of HT Morphogenesis
+**Script:** [ContinuousHTMorphogenesis.m](./path/to/ContinuousHTMorphogenesis.m)
 
 This script creates a continuous description of HT morphogenesis:
-- Generate triangular meshes from the segmented heart tissue using Iso2mesh toolbox.
+- Generate triangular meshes from the segmented heart tissue using the Iso2mesh toolbox.
 - Interpolate the mesh at time point T(N/2), both backward and forward in time, to produce a 3D+t mesh sequence describing continuous morphogenesis.
 
-### 1.5 Validating Motion Estimation
-**Script:** `Error1.m`
+#### 1.5 Validating Motion Estimation
+**Script:** [Error1.m](./path/to/Error1.m)
 
 This script evaluates the accuracy of motion estimation:
 - Compare manual tracking (ground truth) with the propagated tracking (punctual and sequential test sets).
 - Calculate the error in micrometers (µm) as the Eulerian distance.
 
-### 1.6 Validating HT Morphogenesis Description
-**Script:** `Error2.m`
+#### 1.6 Validating HT Morphogenesis Description
+**Script:** [Error2.m](./path/to/Error2.m)
 
 This script validates the accuracy of tracking cell division during morphogenesis:
 - Segment eight dividing cells during the morphogenesis of embryo e02 using ITK-SNAP.
 - Convert the segmented cells into meshes, and reshape the segmentation as in step 4.
 - Compare the direction of cell division by fitting lines to the vertices of the 3D mesh and using the cosine similarity function.
 
-## 2. Integrating Multiple Live Images into a Consensus Temporal Reference
+### 2. Integrating Multiple Live Images into a Consensus Temporal Reference
 
-### 2.1 Staging System
-#### 2.1.1 Morphometric Feature Definition
-**Script:** `FeatureExtraction.m`
+#### 2.1 Staging System
+
+##### 2.1.1 Morphometric Feature Definition
+**Script:** [FeatureExtraction.m](./path/to/FeatureExtraction.m)
 
 - Manually select the points pt1-pt2-pt3-pt4 following the rules reported in the manuscript.
 - Compute the Eulerian distances between the points, followed by the height/width (h/w) computation.
 
-#### 2.1.2 Staging System Modeling
-**Script:** `StagingSystem.m`
+##### 2.1.2 Staging System Modeling
+**Script:** [StagingSystem.m](./path/to/StagingSystem.m)
 
 - Build a Gaussian Naive Bayesian classifier on h/w Atlas features.
 - Predict the staging grade (Gr) for each frame of each live image.
 - Among different equal-staged frames, consider only the one with the highest probability.
 
-### 2.2 Spatial Mapping
-**Script:** `SpatialMapping.m`
+#### 2.2 Spatial Mapping
+**Script:** [SpatialMapping.m](./path/to/SpatialMapping.m)
 
 1. Perform rigid registration of Atlas to live-shape using the TGMM algorithm.
 2. Manually cut Atlas missing parts in MeshLab (`(*)_Cut.ply`) and fill gaps in MeshLab (`(*)_Cut.ply`).
 3. Mask Atlas by creating the `ATLAS_Cut` mask with the `surf2volz` function, recreating a binary image with the same size as the live-shape mask.
-4. Import the segmentation into Fiji, manually fill gaps, and close holes to pass from a surface segmentation to a whole segmentation (`Fill_(*).tif`).
-5. Mask the live-shape, create it with continuous HT description (image).
+4. Import the segmentation into Fiji, manually fill gaps, and close holes to transition from surface segmentation to whole segmentation (`Fill_(*).tif`).
+5. Mask the live-shape, creating it with continuous HT description (image).
 6. Select only staged frames from the live-shape mask.
 7. Perform non-rigid registration with MIRT, transforming the live-shape mask into the `ATLAS_Cut` mask. The output is the deformed live-shape mask and the transformation T.
-8. Morph the live-shape into the Atlas, forcing the live-shape point cloud onto the Atlas mask edge. Output `SurfaceMap`.
+8. Morph the live-shape into the Atlas, aligning the live-shape point cloud onto the Atlas mask edge. Output `SurfaceMap`.
 9. Perform face-to-face matching between live-shape and `ATLAS_Cut`. Return `IdxCUT.mat` (closest point in Atlas for each point in `ATLAS_Cut`) and `IdxMatch.mat` (closest point in Mapped for each point in Atlas (`IdxCut`)).
 
-#### 2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape
-**Script:** `Validation.m`
+##### 2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape
+**Script:** [Validation.m](./path/to/Validation.m)
 
 - Validate spatial correspondences between Atlas and live-shape.
-- Compute the live-shape area mesh and map face-to-face the value into the Atlas.
+- Compute the live-shape area mesh and map face-to-face values into the Atlas.
 
-## 3. Extracting Tissue Deformation 
-### 3.1 Individual Tissue Deformation
-**Script:** `ExtractingTissueDeformation.m`
+### 3. Extracting Tissue Deformation
 
-We extract the mesh deformation between the rest and deformed live-shape mesh staged into the ATLAS. We extract the growth rate, how the mesh is expanding(J>1) or compressing(J<1). We extract the anisotropy, if the mesh deform in a predominant direction (θ>1), or if the deformation occurs equally in the space. 
+#### 3.1 Individual Tissue Deformation
+**Script:** [ExtractingTissueDeformation.m](./path/to/ExtractingTissueDeformation.m)
+
+Extract the mesh deformation between the rest and deformed...
+
