@@ -4,7 +4,7 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
 
 **Paper:** *A method for analyzing myocardial motion and deformation during early mouse morphogenesis* (Raiola M et al., 20**)
 
-## Table of Contents
+## Quick Overview
 
 <details>
   <summary><strong>Requirements</strong></summary>
