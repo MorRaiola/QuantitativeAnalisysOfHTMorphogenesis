@@ -61,7 +61,7 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
 - [Toolbox_graph](https://github.com/gpeyre/matlab-toolboxes/tree/master/toolbox_graph)
 - [Geom3d Toolbox](https://es.mathworks.com/matlabcentral/fileexchange/24484-geom3d)
 - [Groupwise Registration Toolbox](https://es.mathworks.com/matlabcentral/fileexchange/63693-robust-group-wise-registration-of-point-sets-using-multi-resolution-t-mixture-model)
-- [Meshesd](https://github.com/mattools/matGeom)
+- [Meshes3d](https://github.com/mattools/matGeom)
 - [Geodesic MATLAB Master](https://es.mathworks.com/matlabcentral/fileexchange/18168-exact-geodesic-for-triangular-meshes)
 - [ObjWriter](https://github.com/JBKacerovsky/objWriter?tab=readme-ov-file)
 
