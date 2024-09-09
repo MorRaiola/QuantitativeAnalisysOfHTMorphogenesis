@@ -47,7 +47,7 @@ function [F, JCC, anisotropy, globalAutovet] = calculateFaceDeformation(faceNode
     [evecs, evals]  = eig(CauchyStrain); % Eigenvalues of the strain tensor
 
     % Determine anisotropy
-    anisotropy = sqrt(max(evals) / min(evals)); % Assuming evals(2) is the larger eigenvalue
+    anisotropy = sqrt(evals(2,2) / evals(1,1)); % Assuming evals(2) is the larger eigenvalue
 
     % Calculate the global autovectors
     % ordering the eigenvalues and eigenvectors in min max 

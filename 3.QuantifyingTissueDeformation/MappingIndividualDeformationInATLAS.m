@@ -4,119 +4,169 @@ clear; close all; clc;
 % Read data from the Excel file
 Excel = xlsread('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx'); 
 
-% Loop over each row in the Excel file
+% Loop through each row in the Excel file
 for cla = 1:size(Excel, 1)
     
-    % Define folder paths
-    FolderPre = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\';
-    Folder = fullfile(FolderPre, 'Mapping', ['Cluster', num2str(Excel(cla, 1))], 'Deformation');
-    FolderTierra = fullfile(FolderPre, 'Defor', ['Gr', num2str(Excel(cla, 1))], '');
-    DataCC = fullfile(FolderPre, 'Mapping', 'Atlas', ['remesh', num2str(Excel(cla, 1)), '.ply']);
+    % Define base folder and relevant paths
+    baseFolder = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\';
+    clusterID = num2str(Excel(cla, 1));
+    embryoID = num2str(Excel(cla, 2));
     
-    % Load the PLY file containing node and face data
-    [node1, face1] = read_ply(DataCC);
-    node1 = node1(:, [3, 1, 2]); % Reorder the vertices
-    face1 = face1(:, [3, 1, 2]); % Reorder the face indices
+    deformationFolder = fullfile(baseFolder, 'Mapping', ['Cluster', clusterID], 'Deformation');
+    atlasData = fullfile(baseFolder, 'Mapping', 'Atlas', ['remesh', clusterID, '.ply']);
+    outputFolder = fullfile('C:\Users\mraiola\Desktop\im\', ['Gr', clusterID], 'ATLAS\');
     
-    % Create a struct for the mesh data
-    myo.vertices = node1;
-    myo.faces = face1;
+    % Create output directory if it doesn't exist
+    if ~exist(outputFolder, 'dir')
+        mkdir(outputFolder);
+    end
     
-    % Get the current embryo and cluster numbers
-    embryo = Excel(cla, 2);
-    cluster = num2str(Excel(cla, 1));
+    % Load and reorder PLY file data
+    [vertices, faces] = read_ply(atlasData);
+    vertices = vertices(:, [3, 1, 2]);  % Reorder vertices
+    faces = faces(:, [3, 1, 2]);        % Reorder face indices
+    
+    myo.vertices = vertices;
+    myo.faces = faces;
     
     %% MAP GROWTH RATE
-    % Load deformation and face-matched indices
-    load(fullfile(Folder, ['JCCsmooth', num2str(embryo), '.mat']));
-    load(fullfile(FolderPre, 'Mapping', ['Cluster', cluster], 'VertexCorrespondence', ['Embryo', num2str(embryo)], 'IdxCUT.mat'));
-    load(fullfile(FolderPre, 'Mapping', ['Cluster', cluster], 'VertexCorrespondence', ['Embryo', num2str(embryo)], 'IdxMatch.mat'));
-
-    JCC = newJCC; % Update the variable for clarity
-    color = zeros(size(face1, 1), size(JCC, 2));
+    % Load deformation and corresponding face indices
+    load(fullfile(deformationFolder, ['JCCsmooth', embryoID, '.mat']));
+    load(fullfile(baseFolder, 'Mapping', ['Cluster', clusterID], 'VertexCorrespondence', ['Embryo', embryoID], 'IdxCUT.mat'));
+    load(fullfile(baseFolder, 'Mapping', ['Cluster', clusterID], 'VertexCorrespondence', ['Embryo', embryoID], 'IdxMatch.mat'));
     
-    % Apply deformation values to the corresponding vertices
+    % Map the growth rate to the mesh
+    JCC = newJCC;
+    color = zeros(size(faces, 1), size(JCC, 2));
     for i = 1:size(color, 2)
         color(IdxCUT, i) = JCC(IdxMatch, i);
     end
     
-    % Plot the mesh with growth rate coloring
-    plotmesh(node1, face1, 'FaceVertexCData', color, 'EdgeColor', 'none', 'FaceLighting', 'gouraud', ...
-        'AmbientStrength', 0.3, 'DiffuseStrength', 0.8, 'SpecularStrength', 0.9, 'SpecularExponent', 25, 'BackFaceLighting', 'unlit');
-    view([-180, 90])
-    caxis([Excel(cla, 15), Excel(cla, 16)])
-    colormap('jet')
-    axis equal off
-    lightangle(0, 180)
-    camzoom(1.5)
-    close 
-    
-    % Delete existing files and save the new OBJ file
-    delete(fullfile(Folder, 'Atlas', 'JCC', [num2str(Excel(cla, 2)), '.obj']));
-    delete(fullfile(Folder, 'Atlas', 'JCC', [num2str(Excel(cla, 2)), '.mtl']));
-    obj_write_color(myo, fullfile(Folder, 'Atlas', 'JCC', num2str(Excel(cla, 2))), color, 'cmin', Excel(cla, 7));
-    
-    %% MAP ANISOTROPY
-    % Load deformation and face-matched indices for anisotropy
-    load(fullfile(Folder, ['Anisotropysmooth', num2str(embryo), '.mat']));
-    load(fullfile(FolderPre, 'Mapping', ['Cluster', cluster], 'VertexCorrespondence', ['Embryo', num2str(embryo)], 'IdxCUT.mat'));
-    load(fullfile(FolderPre, 'Mapping', ['Cluster', cluster], 'VertexCorrespondence', ['Embryo', num2str(embryo)], 'IdxMatch.mat'));
+    % Convert data to RGB and write the mesh to a PLY file
+    RGB = dataToRGB(color, 1);
+    outputFile = fullfile(outputFolder, [embryoID, '_GrowthRate.ply']);
+    delete(outputFile);
+    writeMesh_plyModify(outputFile, myo.vertices, myo.faces, color, RGB);
 
-    Anisotropy = newAnisotropy;
-    color = zeros(size(face1, 1), size(Anisotropy, 2));
+    %% MAP ANISOTROPY
+    % Load anisotropy data and corresponding face indices
+    load(fullfile(deformationFolder, ['Anisotropysmooth', embryoID, '.mat']));
+    load(fullfile(baseFolder, 'Mapping', ['Cluster', clusterID], 'VertexCorrespondence', ['Embryo', embryoID], 'IdxCUT.mat'));
+    load(fullfile(baseFolder, 'Mapping', ['Cluster', clusterID], 'VertexCorrespondence', ['Embryo', embryoID], 'IdxMatch.mat'));
     
-    % Apply anisotropy values to the corresponding vertices
+    % Map the anisotropy to the mesh
+    Anisotropy = newAnisotropy;
+    color = zeros(size(faces, 1), size(Anisotropy, 2));
     for i = 1:size(color, 2)
         color(IdxCUT, i) = Anisotropy(IdxMatch, i);
     end
     
-    % Plot the mesh with anisotropy coloring
-    plotmesh(node1, face1, 'FaceVertexCData', color, 'EdgeColor', 'none', 'FaceLighting', 'gouraud', ...
-        'AmbientStrength', 0.3, 'DiffuseStrength', 0.8, 'SpecularStrength', 0.9, 'SpecularExponent', 25, 'BackFaceLighting', 'unlit');
-    view([-180, 90])
-    colormap('jet')
-    caxis([Excel(cla, 17), Excel(cla, 18)])
-    axis equal off
-    lightangle(0, 180)
-    camzoom(1.5)
+    % Convert data to RGB and write the mesh to a PLY file
+    RGB = dataToRGB(color, 1);
+    outputFile = fullfile(outputFolder, [embryoID, '_Anisotropy.ply']);
+    delete(outputFile);
+    writeMesh_plyModify(outputFile, myo.vertices, myo.faces, color, RGB);
     
-    % Delete existing files and save the new OBJ file
-    delete(fullfile(Folder, 'Atlas', 'Anisotropy', [num2str(Excel(cla, 2)), '.obj']));
-    delete(fullfile(Folder, 'Atlas', 'Anisotropy', [num2str(Excel(cla, 2)), '.mtl']));
-    obj_write_color(myo, fullfile(Folder, 'Atlas', 'Anisotropy', num2str(Excel(cla, 2))), color, 'cmin', Excel(cla, 9));
+    % Clear variables except for Excel
+    clearvars -except Excel;
+end
 
-    %% MAP STRAIN
-    % Load deformation and face-matched indices for strain
-    load(fullfile(Folder, ['StrainMaxsmooth', num2str(embryo), '.mat']));
-    load(fullfile(FolderPre, 'Mapping', ['Cluster', cluster], 'VertexCorrespondence', ['Embryo', num2str(embryo)], 'IdxCUT.mat'));
-    load(fullfile(FolderPre, 'Mapping', ['Cluster', cluster], 'VertexCorrespondence', ['Embryo', num2str(embryo)], 'IdxMatch.mat'));
+%% Defining mean and std for growth rate and anysotropy ∀ Gr
+clear; close all; clc;
 
-    Strain = newStrain;
-    color = zeros(size(face1, 1), size(Strain, 2));
+% Define cluster identifiers
+clusters = [2, 3, 4, 5, 6, 7, 8, 9];
+
+% Base folder path for results
+baseFolder = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena';
+outputBaseFolder = 'C:\Users\mraiola\Desktop\im';
+
+% Loop through each cluster
+for clustIdx = 1:numel(clusters)
+    clusterID = clusters(clustIdx);
     
-    % Apply strain values to the corresponding vertices
-    for i = 1:size(color, 2)
-        color(IdxCUT, i) = Strain(IdxMatch, i);
+    % Define file paths and names
+    dataFile = fullfile(baseFolder, 'Mapping', 'Atlas', sprintf('remesh%d.ply', clusterID));
+    deformationFolder = fullfile(baseFolder, 'Mapping', sprintf('Cluster%d', clusterID), 'Deformation');
+    outputFolder = fullfile(outputBaseFolder, sprintf('Gr%d', clusterID), 'Merge');
+    
+    % Read PLY file data
+    [vertices, faces] = read_ply(dataFile);
+    myo.vertices = vertices;
+    myo.faces = faces;
+    
+    % Process both JCCsmooth and Anisotropysmooth files
+    for typeIdx = 1:2
+        if typeIdx == 1
+            fileType = 'JCCsmooth';
+            resultPrefix = 'GrowthRate';
+            resultData = 'newJCC';
+        else
+            fileType = 'Anisotropysmooth';
+            resultPrefix = 'Anisotropy';
+            resultData = 'newAnisotropy';
+        end
+        
+        % Get list of files
+        filePattern = sprintf('*%s*', fileType);
+        files = dir(fullfile(deformationFolder, filePattern));
+        fileNames = {files.name};
+        colorData = zeros(size(faces, 1), numel(fileNames));
+        
+        % Process each file
+        for fileIdx = 1:numel(fileNames)
+            filePath = fullfile(deformationFolder, fileNames{fileIdx});
+            load(filePath);
+            
+            % Extract embryo number from file name
+            embryoNum = regexp(files(fileIdx).name, '\d+', 'match');
+            embryoNum = embryoNum{1};
+            
+            % Load vertex correspondence files
+            idxCutFile = fullfile(baseFolder, 'Mapping', sprintf('Cluster%d', clusterID), 'VertexCorrespondence', sprintf('Embryo%s', embryoNum), 'IdxCUT.mat');
+            idxMatchFile = fullfile(baseFolder, 'Mapping', sprintf('Cluster%d', clusterID), 'VertexCorrespondence', sprintf('Embryo%s', embryoNum), 'IdxMatch.mat');
+            load(idxCutFile);
+            load(idxMatchFile);
+            
+            % Update color data based on current result type
+            values = eval(resultData);
+            colorData(IdxCUT, fileIdx) = values(IdxMatch, 1);
+        end
+        
+        % Handle zero values and compute statistics
+        colorData(any(colorData == 0, 2), :) = 0;
+        if size(colorData, 2) > 1
+            colorMean = mean(colorData, 2);
+            colorSTD = std(colorData, [], 2);
+        else
+            colorMean = colorData;
+            colorSTD = zeros(size(colorMean, 1), 1);
+        end
+        
+        % Prepare and create output folder if necessary
+        if ~exist(outputFolder, 'dir')
+            mkdir(outputFolder);
+        end
+        
+        % Save mean and standard deviation data
+        for statIdx = 1:2
+            if statIdx == 1
+                data = colorMean;
+                suffix = 'Mean';
+            else
+                data = colorSTD;
+                suffix = 'Std';
+            end
+            
+            rgbData = dataToRGB(data, statIdx == 1);
+            filePath = fullfile(outputFolder, sprintf('%s_%s.ply', suffix, resultPrefix));
+            if exist(filePath, 'file')
+                delete(filePath);
+            end
+            writeMesh_plyModify(filePath, myo.vertices, myo.faces, data, rgbData);
+        end
     end
     
-    % Save the strain data
-    save(fullfile(Folder, 'Atlas', 'Strain', ['Stretch', num2str(embryo), '.mat']), 'color');
-    
-    % Plot the mesh with strain coloring
-    plotmesh(node1, face1, 'FaceVertexCData', color, 'EdgeColor', 'none', 'FaceLighting', 'gouraud', ...
-        'AmbientStrength', 0.3, 'DiffuseStrength', 0.8, 'SpecularStrength', 0.9, 'SpecularExponent', 25, 'BackFaceLighting', 'unlit');
-    view([-180, 90])
-    colormap('jet')
-    caxis([Excel(cla, 19), Excel(cla, 20)])
-    axis equal off
-    lightangle(0, 180)
-    camzoom(1.5)
-    
-    % Delete existing files and save the new OBJ file
-    delete(fullfile(Folder, 'Atlas', 'Strain', [num2str(Excel(cla, 2)), '.obj']));
-    delete(fullfile(Folder, 'Atlas', 'Strain', [num2str(Excel(cla, 2)), '.mtl']));
-    obj_write_color(myo, fullfile(Folder, 'Atlas', 'Strain', num2str(Excel(cla, 2))), color, 'cmin', Excel(cla, 11));
-    
-    % Clear variables except for Excel and loop variables
-    clearvars -except Excel valueStr valueAni valueJCC
+    % Clear variables for the next iteration
+    clearvars -except clusters baseFolder outputBaseFolder
 end

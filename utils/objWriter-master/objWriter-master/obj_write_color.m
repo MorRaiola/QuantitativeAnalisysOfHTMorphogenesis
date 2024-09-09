@@ -1,4 +1,4 @@
-function obj_write_color(FV, filename, colors, varargin)
+function obj_write_color(FV, filename, colors,RGB,varargin)
 % obj_write_color - writes wavefront OBJ file with user-defined face/vertex
 % colors.
 % Colors are defined as individual materials in the obj and corresponding .mtl files
@@ -136,7 +136,7 @@ illum=p.Results.illum;
             end
         [cVector_discreet, ~]=discretize(colors, cbin_edges);
         c=cMap(cVector_discreet, :); 
-        
+        c= RGB;
         obj_write_manual_mtl(FV, filename, c, 'Kd', c, 'Ks', c, 'd', d, 'object', object, 'Ns', Ns, 'Ni', Ni, 'illum', illum); 
     
     elseif size(colors, 2)==3
