@@ -55,6 +55,9 @@ for i=1:length(iz);
 
         if(length(pos)>0)
             zz=floor(((zi(iz(i))-zi(1)))/dz0);
+            if zz == 0
+                zz= 1;
+            end
             for k=1:size(pos,1)
                 img(pos(k,1),pos(k,2),zz)=1;
             end

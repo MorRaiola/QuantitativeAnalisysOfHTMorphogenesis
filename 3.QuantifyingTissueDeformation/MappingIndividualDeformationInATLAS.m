@@ -79,7 +79,7 @@ clusters = [2, 3, 4, 5, 6, 7, 8, 9];
 
 % Base folder path for results
 baseFolder = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena';
-outputBaseFolder = 'C:\Users\mraiola\Desktop\im';
+outputBaseFolder = 'V:\CellReportsMethods_2024\Data\Figure4_Quantifying_Tissue_Deformation_During_Early_Morphogenesis';
 
 % Loop through each cluster
 for clustIdx = 1:numel(clusters)
@@ -88,8 +88,8 @@ for clustIdx = 1:numel(clusters)
     % Define file paths and names
     dataFile = fullfile(baseFolder, 'Mapping', 'Atlas', sprintf('remesh%d.ply', clusterID));
     deformationFolder = fullfile(baseFolder, 'Mapping', sprintf('Cluster%d', clusterID), 'Deformation');
-    outputFolder = fullfile(outputBaseFolder, sprintf('Gr%d', clusterID), 'Merge');
-    
+    outputFolder = fullfile(outputBaseFolder, sprintf('Gr%d', clusterID), 'StepWise');
+   
     % Read PLY file data
     [vertices, faces] = read_ply(dataFile);
     myo.vertices = vertices;
@@ -158,13 +158,16 @@ for clustIdx = 1:numel(clusters)
                 suffix = 'Std';
             end
             
-            rgbData = dataToRGB(data, statIdx == 1);
-            filePath = fullfile(outputFolder, sprintf('%s_%s.ply', suffix, resultPrefix));
-            if exist(filePath, 'file')
-                delete(filePath);
+            if sum(data)>1
+                rgbData = dataToRGB(data,  1, typeIdx,suffix);
+                filePath = fullfile(outputFolder, sprintf('%s_%s.ply', suffix, resultPrefix));
+                if exist(filePath, 'file')
+                    delete(filePath);
+                end
+                writeMesh_plyModify(filePath, myo.vertices, myo.faces, data, rgbData);
             end
-            writeMesh_plyModify(filePath, myo.vertices, myo.faces, data, rgbData);
         end
+
     end
     
     % Clear variables for the next iteration
