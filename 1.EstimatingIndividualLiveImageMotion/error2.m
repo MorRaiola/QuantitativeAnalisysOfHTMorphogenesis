@@ -44,7 +44,7 @@ clear; close all; clc;
 
 % Load final time point segmentation
 Im = loadtiff('S:\LAB_MT\RESULTADOS\Morena\Multiresolution\25%\Cells\Reslice of tend.tif');
-load('S:\LAB_MT\RESULTADOS\Morena\Embryos\Embryo2\disp.mat');
+load('S:\LAB_MT\RESULTADOS\Morena\Embryos\Embryo2\transform.mat');
 
 % Morph each cell's mesh over time
 for i = 1:length(unique(Im)) - 1
