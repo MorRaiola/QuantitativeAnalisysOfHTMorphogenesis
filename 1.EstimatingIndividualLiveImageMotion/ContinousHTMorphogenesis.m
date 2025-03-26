@@ -17,7 +17,7 @@ Im = ImagePlus2array(imp);
 Im = squeeze(Im);
 
 % Load transformation data
-transformationPath = fullfile(baseFolder, ['Embryo' num2str(embryoID)], 'disp.mat');
+transformationPath = fullfile(baseFolder, ['Embryo' num2str(embryoID)], 'transformation.mat');
 load(transformationPath, 'disp'); % Load displacement data
 timepoints = size(disp, 1) + 1;
 midline = uint8(timepoints / 2);
