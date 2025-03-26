@@ -11,7 +11,7 @@ baseFolder = 'S:\LAB_MT\RESULTADOS\Morena\Multiresolution\25%';
 embryoID = 1;
 
 % Load transformation data
-load(fullfile(baseFolder, 'disp1.mat'), 'disp');
+load(fullfile(baseFolder, 'transformation.mat'), 'disp');
 
 % Load manual tracking data from Imaris
 trackingFile = fullfile(baseFolder, 'Tracking', ['e' num2str(embryoID) '_Statistics'], 'Random_Detailed.csv');
