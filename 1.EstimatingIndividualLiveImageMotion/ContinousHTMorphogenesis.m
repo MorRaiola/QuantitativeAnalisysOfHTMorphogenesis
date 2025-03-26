@@ -6,18 +6,17 @@ addpath('C:\Users\mraiola\Downloads\fiji-win64\Fiji.app\scripts');
 javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\mij.jar'); % MIJ Java folder
 javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\ij-1.52i.jar'); % ImageJ JAR file
 
-% Define the base folder and embryo ID
-baseFolder = 'S:\LAB_MT\RESULTADOS\Morena\Embryos';
-embryoID = 2;
+% Load the time-lapse image data
+Embryo = 'S:\LAB_MT\RESULTADOS\Morena\Embryos\Embryo1\Data\Embryo1.tif';
+transformationPath = 'S:\LAB_MT\RESULTADOS\Morena\Embryos\Embryo1\Data\transformation.mat';
+outputMeshPath = 'S:\LAB_MT\RESULTADOS\Morena\Embryos\Embryo1\Shapes\CC';
 
 % Load the image data
-imagePath = fullfile(baseFolder, ['Embryo' num2str(embryoID)], 'Data', ['Embryo' num2str(embryoID) '.tif']);
-imp = ij.IJ.openImage(imagePath); % Load image (ensure RGB images are converted to grayscale for feature extraction)
+imp = ij.IJ.openImage(Embryo); % Load image (ensure RGB images are converted to grayscale for feature extraction)
 Im = ImagePlus2array(imp);
 Im = squeeze(Im);
 
 % Load transformation data
-transformationPath = fullfile(baseFolder, ['Embryo' num2str(embryoID)], 'transformation.mat');
 load(transformationPath, 'disp'); % Load displacement data
 timepoints = size(disp, 1) + 1;
 midline = uint8(timepoints / 2);
@@ -46,8 +45,7 @@ tic
 for t = 1:midline-1
     newsrf = morphSurf3D(srfCC, disp{midline-t, 1}, orig, spacing, Im);
     srfCC.vertices = newsrf.vertices;
-    outputMeshPath = fullfile(baseFolder, ['Embryo' num2str(embryoID)], 'Shapes', ['CC' num2str(midline-t) '.ply']);
-    write_ply(srfCC.vertices, srfCC.faces, outputMeshPath);
+    write_ply(srfCC.vertices, srfCC.faces, [outputMeshPath num2str(midline-t) '.ply']);
 end
 
 % Reset surface structure for backward morphing
@@ -58,8 +56,7 @@ srfCC.faces = newFaces;
 for t = midline:timepoints-1
     newsrf = morphSurf3D(srfCC, disp{t, 1}, orig, spacing, Im);
     srfCC.vertices = newsrf.vertices;
-    outputMeshPath = fullfile(baseFolder, ['Embryo' num2str(embryoID)], 'Shapes', ['CC' num2str(t+1) '.ply']);
-    write_ply(srfCC.vertices, srfCC.faces, outputMeshPath);
+    write_ply(srfCC.vertices, srfCC.faces, [outputMeshPath num2str(midline) '.ply']);
 end
 toc
 
