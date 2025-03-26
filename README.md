@@ -93,7 +93,7 @@ In this step, live images are registered using the MIRT3D algorithm:
 - Export segmented images as NIFTI (.nii.gz) and reslice from the left using ImageJ, then save as .tif.
 
 #### 1.4 Continuous Description of HT Morphogenesis
-**Script:** [ContinuousHTMorphogenesis.m](./1.EstimatingIndividualLiveImageMotion/ContinuousHTMorphogenesis.m)
+**Script:** [ContinuousHTMorphogenesis.m](./1.EstimatingIndividualLiveImageMotion/ContinousHTMorphogenesis.m)
 
 This script creates a continuous description of HT morphogenesis:
 - Generate triangular meshes from the segmented heart tissue using the Iso2mesh toolbox.
