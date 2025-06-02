@@ -4,6 +4,8 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
 
 **Paper:** *A method for analysing tissue motion and deformation during mammalian cardiogenesis* (Raiola M et al., 2025b)
 
+The order of the code follows the order of Figure 1 in the paper.
+
 ## Quick Overview
 
 <details>
@@ -157,7 +159,7 @@ This script validates the accuracy of tracking cell division during morphogenesi
 
 Extract the mesh deformation between the rest and deformed shapes Gr-Gr+1
 
-### 4 In Silico Fate Map
+### 4. In Silico Fate Map
 **Script:** [ExtractingTissueDeformation.m](./4.InSilicoFateMap/ATLASMotionProfile.m)
 
 Compute the dynamic ATLAS by combining the motion profiles of individual SurfaceMaps.
