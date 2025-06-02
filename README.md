@@ -1,4 +1,4 @@
-# A method for analysing tissue motion and deformation during mammalian cardiogenesis
+# A method for analysing tissue motion and deformation during mammalian organogenesis
 
 This repository contains the MATLAB 2023b implementation of a workflow designed to analyze and validate myocardial motion and deformation during heart tissue (HT) morphogenesis. :mouse: :anatomical_heart:
 
