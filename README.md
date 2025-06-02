@@ -157,7 +157,7 @@ This script validates the accuracy of tracking cell division during morphogenesi
 
 Extract the mesh deformation between the rest and deformed shapes Gr-Gr+1
 
-#### 4 In Silico Fate Map
+### 4 In Silico Fate Map
 **Script:** [ExtractingTissueDeformation.m](./4.InSilicoFateMap/ATLASMotionProfile.m)
 
 Compute the dynamic ATLAS by combining the motion profiles of individual SurfaceMaps.
