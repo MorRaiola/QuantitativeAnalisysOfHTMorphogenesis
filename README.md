@@ -68,7 +68,7 @@ The order of the code follows the order of Figure 1 in the paper.
 - [ObjWriter](https://github.com/JBKacerovsky/objWriter?tab=readme-ov-file)
 - 
 ### DATA
-The dataset used in this project is publicly available on Mendeley Data 
+The dataset used in this project is publicly available on Mendeley Data @ doi: 10.17632/54gbvnsgnp.1
 
 ## Workflow Overview
 
