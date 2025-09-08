@@ -177,8 +177,6 @@ Plotting Deformation onto the ATLAS Shape using Face-to-Face Matching.
 #### 3.3 HT Cumulative Deformation
 **Script:** [HTCumulativeDeformation.m](./3.QuantifyingTissueDeformation/3.3HTCumulativeDeformation.m)
 
-Concatenating single live-image motion profiles into the Atlas.
-
 ### 4. In Silico Fate Map
 **Script:** [ATLASMotionProfile](./4.InSilicoFateMap/ATLASMotionProfile.m)
 
