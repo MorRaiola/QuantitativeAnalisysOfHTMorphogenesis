@@ -5,6 +5,8 @@ clear; close all; clc
 % Define cut and embryo arrays
 cutArray = { [3, 4, 5, 6, 7], 2, [8, 9] }; % Array of cuts
 embryoArray = { [31, 16, 35, 27, 24, 12], 31, 12 }; % Corresponding embryos
+clusterFolder = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+deformationFolder = '\3. QuantifyingTissueDeformation\DinamicAtlas\';
 
 % Loop through each set of cuts and embryos
 for i = 1:numel(cutArray)
@@ -16,9 +18,9 @@ for i = 1:numel(cutArray)
         embryoIndex = min(cutIndex + (i - 1) * 2, numel(embryos));
         
         % Read PLY file and .mat file
-        [node, face] = read_ply(['V:\Mapping\Cluster' num2str(cuts(cutIndex)) ...
+        [node, face] = read_ply([clusterFolder num2str(cuts(cutIndex)) ...
                                    '\3D\Mapped\' num2str(embryos(embryoIndex)) '.ply']);
-        load(['V:\Mapping\Cluster' num2str(cuts(cutIndex)) ...
+        load([clusterFolder num2str(cuts(cutIndex)) ...
               '\Disp\Rigid\' num2str(embryos(embryoIndex)) '.mat']);
         
         % Apply transformation to nodes
@@ -26,7 +28,7 @@ for i = 1:numel(cutArray)
         trPts = (tempSR*node');
         Xo = bsxfun(@plus,trPts',Transform.t);
                 
-        write_ply(transformedPoints', face, ['G:\mappin\Atlas\Models\3\' ...
+        write_ply(transformedPoints', face, [deformationFolder ...
             num2str(cuts(cutIndex)) '\' num2str(embryos(embryoIndex)) 'Rot.ply']);
     end
 end
@@ -39,7 +41,8 @@ clear;close all;clc
 
 cutArray = { [3, 4, 5, 6, 7], 2, [8, 9] }; % Array of cuts
 embryoArray = { [31, 16, 35, 27, 24, 12], 31, 12}; % Corresponding embryos
-
+clusterFolder = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+deformationFolder = '\3. QuantifyingTissueDeformation\DinamicAtlas\';
 
 for i = 1:numel(cutArray)
     cuts = cutArray{i};
@@ -48,9 +51,9 @@ for i = 1:numel(cutArray)
     for cutIndex = 1:numel(cuts)
                 embryoIndex = min(cutIndex + (i - 1) * 2, numel(embryos));
 
-[node,face] = read_ply(['F:\mappin\Atlas\Models\3\' num2str(cuts(cutIndex)) '\' num2str(embryos(embryoIndex)) 'Rot_Cut.ply']); %% meshlab results
-[node1,face1] = read_ply(['F:\mappin\Cluster' num2str(cuts(cutIndex)) '\3D\Mapped\' num2str(embryos(embryoIndex)) '.ply']);
-load(['F:\mappin\Cluster' num2str(cuts(cutIndex)) '\Disp\Rigid\' num2str(embryos(embryoIndex)) '.mat']);
+[node,face] = read_ply([deformationFolder num2str(cuts(cutIndex)) '\' num2str(embryos(embryoIndex)) 'Rot_Cut.ply']); %% meshlab results
+[node1,face1] = read_ply([clusterFolder num2str(cuts(cutIndex)) '\3D\Mapped\' num2str(embryos(embryoIndex)) '.ply']);
+load([clusterFolder num2str(cuts(cutIndex)) '\Disp\Rigid\' num2str(embryos(embryoIndex)) '.mat']);
 tempSR = bsxfun(@times,Transform.R,Transform.s);
 trPts = (tempSR*node1');
 Xo = bsxfun(@plus,trPts',Transform.t);
@@ -58,14 +61,15 @@ centroid = meshcentroid(node,face);
 centroid1 = meshcentroid(Xo,face1);
 [IdxMatch,D] = knnsearch(centroid1,centroid);  
 face1 = face1(IdxMatch,:);
-write_ply(Xo,face1,['F:\mappin\Atlas\Models\3\' num2str(cuts(cutIndex)) '\' num2str(embryos(embryoIndex)) 'Rot_Cut.ply']); %% with the right index
+write_ply(Xo,face1,[deformationFolder num2str(cuts(cutIndex)) '\' num2str(embryos(embryoIndex)) 'Rot_Cut.ply']); %% with the right index
     end
 end
 
 
 %% 4.4 Describing tissue with the same num of points (we registered with 35's num of points)
 clear; close all; clc;
-FolderPre = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\Mapping\';
+deformationFolder = '\3. QuantifyingTissueDeformation\DinamicAtlas\';
+clusterFolder = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 
 % Define the cuts and corresponding embryos and times for processing
 data = {
@@ -84,8 +88,8 @@ for d = 1:size(data, 1)
     s = 1; m = time(1);
     
     for c = 1:numel(cut)
-        [node, face] = read_ply([FolderPre '\Atlas\Models\3\' num2str(cut(c)) '\35Rot_Cut.ply']);
-        [node1, face1] = read_ply([FolderPre '\Atlas\Models\3\' num2str(cut(c)) '\' num2str(embryo(1, c)) 'Rot_Cut.ply']);
+        [node, face] = read_ply([deformationFolder  num2str(cut(c)) '\35Rot_Cut.ply']);
+        [node1, face1] = read_ply([deformationFolder  num2str(cut(c)) '\' num2str(embryo(1, c)) 'Rot_Cut.ply']);
         
         % Set registration options
         opt.method='rigid'; % use rigid registration
@@ -102,7 +106,7 @@ for d = 1:size(data, 1)
 
         % Register Y to X
         [Transform, Correspondence] = cpd_register(node1, node, opt);
-        write_ply(node1(Correspondence,:), face, [FolderPre '\Atlas\Models\3\' num2str(cut(c)) '\' num2str(embryo(1, s)) 'Rot_Registered.ply']);
+        write_ply(node1(Correspondence,:), face, [deformationFolder num2str(cut(c)) '\' num2str(embryo(1, s)) 'Rot_Registered.ply']);
         
         if c==size(pos,2)+1
             subtime = m:time(end);
@@ -111,8 +115,8 @@ for d = 1:size(data, 1)
         end
 
         for k = 1:numel(subtime)
-            [node1, face1] = read_ply([FolderPre '\Cluster' num2str(subtime(k)) '\3D\Mapped\' num2str(embryo(1, s)) '.ply']);
-            write_ply(node1(Correspondence,:), face, [FolderPre '\Atlas\Models\3\' num2str(subtime(k)) '\' num2str(embryo(1, s)) 'Rot_Registered.ply']);
+            [node1, face1] = read_ply([clusterFolder num2str(subtime(k)) '\3D\Mapped\' num2str(embryo(1, s)) '.ply']);
+            write_ply(node1(Correspondence,:), face, [deformationFolder num2str(subtime(k)) '\' num2str(embryo(1, s)) 'Rot_Registered.ply']);
         end
         
         s = s + 1; m = time(pos + 1);
@@ -124,7 +128,7 @@ clear; close all; clc
 
 % Loop through classes 2 to 9
 for cla = 2:9
-    Folder = ['F:\mappin\Atlas\Models\3\' num2str(cla)];
+    Folder = ['\\3. QuantifyingTissueDeformation\DinamicAtlas\' num2str(cla)];
     inFiles = dir([Folder filesep '*.ply']); 
     inNames = {};
     
