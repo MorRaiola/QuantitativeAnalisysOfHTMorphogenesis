@@ -83,8 +83,8 @@ This step involves preprocessing 3D+t images:
 - Cropping and resizing images (down to 25%).
 - Reslicing volumes starting from the left side using Fiji.
 
-Embryo = '... \Embryo1\Data\Embryo1.tif'; % Raw Data 
-Output = '... \Embryo1\Data'; % Resampled Data at 25%
+*Embryo = '... \Embryo1\Data\Embryo1.tif'; % Raw Data 
+Output = '... \Embryo1\Data'; % Resampled Data at 25%*
 
 #### 1.2 MIRT Algorithm
 **Script:** [MIRT.m](./1.EstimatingIndividualLiveImageMotion/1.2MIRT.m)
