@@ -1,14 +1,14 @@
 %% Mapping live-shapes into the relative ATLAS Gr shape
-%% 3.1 Rigid registration atlas-->live images with TGMM
+%% 2.2.1 Rigid registration atlas-->live images with TGMM
 clear; close all; clc;
-Excel = xlsread('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx'); 
+Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
 
 for cla = 1:size(Excel, 1)
     % Load file paths
-    AtlasFolder = sprintf('F:\\mappin\\Atlas\\remesh%d.ply', Excel(cla, 1));
+    AtlasFolder = sprintf('\Source_Data\Figure 3\3A\Gr%d.ply', Excel(cla, 1));
     embryo = Excel(cla, 2);
-    EmbryoFolder = sprintf('F:\\mappin\\Cluster%d\\3D\\Embryo\\%d.ply', Excel(cla, 1), embryo);
-    OutFolder = sprintf('F:\\mappin\\Cluster%d\\3D\\Atlas\\%d.ply', Excel(cla, 1), embryo);
+    EmbryoFolder = sprintf('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\\Cluster%d\\3D\\Embryo\\%d.ply', Excel(cla, 1), embryo);
+    OutFolder = sprintf('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReferencen\\Cluster%d\\3D\\Atlas\\%d.ply', Excel(cla, 1), embryo);
 
     [nodeA, faceA] = read_ply(AtlasFolder); % Read PLY file ATLAS
     [nodeE, faceE] = read_ply(EmbryoFolder); % Read PLY file Embryo 
@@ -18,7 +18,7 @@ for cla = 1:size(Excel, 1)
     [MU, Transform, TrainingSet, UP, PP, Mcoeffs, nu, convg, SSM] = TMMgroupwiseReg(Tset, uint16(size(nodeE, 1)/ 2), 150, 1, nodeE);
 
     write_ply(TrainingSet.TransfPts, faceA, OutFolder);
-    save(sprintf('F:\\mappin\\Cluster%d\\Disp\\Rigid\\%d.mat', Excel(cla, 1), embryo), 'Transform');
+    save(sprintf('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\\Cluster%d\\Disp\\Rigid\\%d.mat', Excel(cla, 1), embryo), 'Transform');
 end
 
 % Rotate again the data in the ATLAS reference
@@ -26,17 +26,17 @@ tempSR = bsxfun(@times, Transform.R, Transform.s);
 trPts = tempSR * TrainingSet.TransfPts';
 Xo = bsxfun(@plus, trPts', Transform.t);
 
-%% 3.2 Manual Cut of missing parts in MeshLab --> Cut_(embryo).ply / Fillgaps in Meshlab --> Cut_(embryo).1.ply
+%% 2.2.2 Manual Cut of missing parts in MeshLab --> Cut_(embryo).ply / Fillgaps in Meshlab --> Cut_(embryo).1.ply
 
+All the manual Cut are in '\Supplementary_Data\Figure 3\3E\SpatialMapping\Grx\Atlas'
 
-
-%% 3.3 Mask ATLAS_Cut, creating the ATLAS mask without the missing parts (IFTs or OFT)
+%% 2.2.3 Mask ATLAS_Cut, creating the ATLAS mask without the missing parts (IFTs or OFT)
 clear; close all; clc;
 
-Excel = xlsread('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx');
+Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
 
 for cla = 1:size(Excel, 1)
-    Folder = sprintf('\\\\tierra.cnic.es\\SC\\LAB_MT\\RESULTADOS\\Morena\\Mapping\\Cluster%d', Excel(cla, 1));
+    Folder = sprintf('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\\Cluster%d', Excel(cla, 1));
     embryo = Excel(cla, 2);
     time = Excel(cla, 4);
     OutFolder = sprintf('%s\\Images\\Atlas\\%d.tif', Folder, embryo);
@@ -55,16 +55,18 @@ end
 
 
 
-%% 3.4 Import the segmentation in Fiji. Fill gap manually + close holes --> Fill_(embryo).tif
+%% 2.2.4 Import the segmentation in Fiji. Fill gap manually + close holes --> Fill_(embryo).tif
 
 
 
-%% 3.5 Mask live-shape
+%% 2.2.4 Import the segmentation in Fiji. Fill gap manually + close holes --> Fill_(embryo).tif5 Mask live-shape
 clear; close all; clc;
 
-Folder = 'S:\LAB_MT\RESULTADOS\Morena\Embryos';
-embryo = 1;
-Embryo = sprintf('%s\\Embryo%d\\Data\\Embryo%d.tif', Folder, embryo, embryo);
+Folder = '\\Supplementary_Data\Figure 2\2I\Segmenting Heart Tissue';
+Folderdisp ='\\1. EstimatingIndividualLiveImageMotion';
+
+embryo =1;
+Embryo = sprintf('%s\\e0%d.tif', Folder, embryo, embryo);
 imp = ij.IJ.openImage(Embryo);
 Im = squeeze(ImagePlus2array(imp));
 
@@ -101,12 +103,11 @@ imp = copytoImagePlus(Seg, 'YXZT');
 ij.IJ.saveAsTiff(imp, sprintf('%s\\Embryo%d\\Segmentation\Seg_completo.tif', Folder, embryo));
 
 
-
-%% 3.6 Secting only staged frame from the live-shape mask
+%% 2.2.4 Import the segmentation in Fiji. Fill gap manually + close holes --> Fill_(embryo).tif.6 Secting only staged frame from the live-shape mask
 clear; close all; clc;
 
-Folder = 'S:\LAB_MT\RESULTADOS\Morena\Embryos';
-Excel = xlsread('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx');
+Folder = '\\1. EstimatingIndividualLiveImageMotion';
+Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
 
 for cla = 1:size(Excel, 1)
     % Load file 
@@ -120,8 +121,8 @@ for cla = 1:size(Excel, 1)
     gr_1 = gr - 1;
     options.overwrite = true;
 
-    Folder1 = sprintf('V:\\Mapping\\Cluster%d\\Images\\Embryo\\e%d.tif', gr, Excel(cla, 2));
-    Folder2 = sprintf('V:\\Mapping\\Cluster%d\\Images\\Embryo\\e%d.tif', gr_1, Excel(cla, 2));
+    Folder1 = sprintf('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\\Cluster%d\\Images\\Embryo\\e%d.tif', gr, Excel(cla, 2));
+    Folder2 = sprintf('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\\Cluster%d\\Images\\Embryo\\e%d.tif', gr_1, Excel(cla, 2));
 
     saveastiff(Im(:,:,:,time1), Folder1, options);
     saveastiff(Im(:,:,:,time2), Folder2, options);
@@ -129,12 +130,12 @@ end
 
 
 
-%% 3.7 Non-rigid Registration with MIRT. Trasform live-shape mask in ATLAS_Cut mask
+%% 2.2.7 Non-rigid Registration with MIRT. Trasform live-shape mask in ATLAS_Cut mask
 clear; close all; clc;
-Excel = xlsread('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx');
+Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
 
 for cla = 1:size(Excel, 1)
-    Folder = sprintf('\\\\tierra.cnic.es\\SC\\LAB_MT\\RESULTADOS\\Morena\\Mapping\\Cluster%d', Excel(cla, 1));
+    Folder = sprintf('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\\Cluster%d', Excel(cla, 1));
     embryo = Excel(cla, 2);
     time = Excel(cla, 4);
 
@@ -165,7 +166,7 @@ for cla = 1:size(Excel, 1)
 
     clearvars -except Excel;
 
-    Folder = sprintf('\\\\tierra.cnic.es\\SC\\LAB_MT\\RESULTADOS\\Morena\\Mapping\\Cluster%d', Excel(cla, 1)-1);
+    Folder = sprintf('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\\Cluster%d', Excel(cla, 1)-1);
     embryo = Excel(cla, 2);
     time = Excel(cla, 3);
 
@@ -199,21 +200,21 @@ end
 
 
 
-%% 3.8 PointCloud Registration: Force point cloud on ATLAS mask edge --> MAPPED folder (SurfaceMap)
+%% 2.2.8 PointCloud Registration: Force point cloud on ATLAS mask edge --> MAPPED folder (SurfaceMap)
 clear; close all; clc;
 
 % Load Excel data
-Excel = xlsread('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx'); 
+Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
 
 for cla = 1:size(Excel, 1)
     % Define folder paths and load required files
     clusterNum = Excel(cla, 1);
     embryo = Excel(cla, 2);
     time = Excel(cla, 4);
-    Folder = fullfile('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\Mapping', ['Cluster', num2str(clusterNum)]);
+    Folder = fullfile('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference', ['Cluster', num2str(clusterNum)]);
     
     % Load point cloud, transformation, embryo mask, and ATLAS mask
-    [node, face] = read_ply(fullfile('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\Embryos', ...
+    [node, face] = read_ply(fullfile('\\1. EstimatingIndividualLiveImageMotion', ...
         ['Embryo', num2str(embryo), '\Shapes\CC', num2str(time), '.ply']));
     load(fullfile(Folder, 'Disp\Non-Rigid', ['res', num2str(embryo), '.mat']));
     refim = loadtiff(fullfile(Folder, 'Images\Atlas', ['Fill_', num2str(embryo), '.tif']));
@@ -294,16 +295,16 @@ for cla = 1:size(Excel, 1)
     clearvars -except Excel
 end
 
-%% 3.9 Face-to-Face Matching Live-shape vs. ATLAS_Cut
+%% 2.2.9 Face-to-Face Matching Live-shape vs. ATLAS_Cut
 clear; close all; clc;
 
 % Load Excel data
-Excel = xlsread('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx'); 
+Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
 
 for cla = 1:size(Excel, 1)
     clusterNum = Excel(cla, 1);
     embryo = Excel(cla, 2);
-    Folder = fullfile('\\\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\Mapping', ['Cluster', num2str(clusterNum)]);
+    Folder = fullfile('\\1. EstimatingIndividualLiveImageMotion', ['Cluster', num2str(clusterNum)]);
 
     % Load Atlas data
     [node, face] = read_ply(fullfile(Folder, '3D\Atlas', ['Cut_', num2str(embryo), '.ply'])); % Cut
