@@ -5,8 +5,8 @@ clear; close all; clc
 % Define cut and embryo arrays
 cutArray = { [3, 4, 5, 6, 7], 2, [8, 9] }; % Array of cuts
 embryoArray = { [31, 16, 35, 27, 24, 12], 31, 12 }; % Corresponding embryos
-clusterFolder = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
-deformationFolder = '\3. QuantifyingTissueDeformation\DinamicAtlas\';
+clusterFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+deformationFolder = '\Code_data\4. InSilicoFateMap\';
 
 % Loop through each set of cuts and embryos
 for i = 1:numel(cutArray)
@@ -41,8 +41,9 @@ clear;close all;clc
 
 cutArray = { [3, 4, 5, 6, 7], 2, [8, 9] }; % Array of cuts
 embryoArray = { [31, 16, 35, 27, 24, 12], 31, 12}; % Corresponding embryos
-clusterFolder = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
-deformationFolder = '\3. QuantifyingTissueDeformation\DinamicAtlas\';
+
+clusterFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+deformationFolder = '\Code_data\4. InSilicoFateMap\';
 
 for i = 1:numel(cutArray)
     cuts = cutArray{i};
@@ -68,8 +69,9 @@ end
 
 %% 4.4 Describing tissue with the same num of points (we registered with 35's num of points)
 clear; close all; clc;
-deformationFolder = '\3. QuantifyingTissueDeformation\DinamicAtlas\';
-clusterFolder = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+
+clusterFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+deformationFolder = '\Code_data\4. InSilicoFateMap\';
 
 % Define the cuts and corresponding embryos and times for processing
 data = {
@@ -128,7 +130,7 @@ clear; close all; clc
 
 % Loop through classes 2 to 9
 for cla = 2:9
-    Folder = ['\\3. QuantifyingTissueDeformation\DinamicAtlas\' num2str(cla)];
+    Folder = ['\Code_data\4. InSilicoFateMap\s\' num2str(cla)];
     inFiles = dir([Folder filesep '*.ply']); 
     inNames = {};
     
