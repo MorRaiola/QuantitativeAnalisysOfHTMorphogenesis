@@ -8,8 +8,8 @@ javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\mij.jar');  % MIJ Java fold
 javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\ij-1.52i.jar');  % ImageJ JAR file
 
 % Load cell segmentation data
-embryoFile = '\1. Estimating Individual Live Image Motion\1.6Error2\Cells\Reslice of thalf.tif';
-output = '\1. Estimating Individual Live Image Motion\1.6Error2\Cells\GT'
+embryoFile = '\1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\Reslice of thalf.tif';
+output = '\1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\GT'
 imp = ij.IJ.openImage(embryoFile);
 Seg = squeeze(ImagePlus2array(imp));
 Im = Seg(:,:,:,1);  % Use the first time point
@@ -44,9 +44,9 @@ end
 clear; close all; clc;
 
 % Load final time point segmentation
-Im = loadtiff('\1. Estimating Individual Live Image Motion\1.6Error2\Cells\Reslice of tend.tif');
-load('\1. Estimating Individual Live Image Motion\Embryo2\disp.mat');
-output = '\1. Estimating Individual Live Image Motion\1.6Error2\Cells\Test';
+Im = loadtiff('\1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\Reslice of tend.tif');
+load('\1. EstimatingIndividualLiveImageMotion\Embryo2\disp.mat');
+output = '\1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\Test';
 
 % Morph each cell's mesh over time
 for i = 1:length(unique(Im)) - 1
@@ -87,8 +87,8 @@ end
 clear; close all; clc;
 
 % Load initial mesh and segmentation
-cellMid = loadtiff('\1. Estimating Individual Live Image Motion\1.6Error2\Cells\Reslice of t1.tif');
-[V, F] = read_ply('\1. Estimating Individual Live Image Motion\Embryo2\Shape\CC1.ply');
+cellMid = loadtiff('\1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\Reslice of t1.tif');
+[V, F] = read_ply('\1. EstimatingIndividualLiveImageMotion\Embryo2\Shape\CC1.ply');
 Cs = zeros(length(unique(Im)) - 1, 1); 
 angles = zeros(length(unique(Im)) - 1, 1); 
 
@@ -99,22 +99,22 @@ hold on;
 % Calculate cosine similarity for each cell
 for i = 1:length(unique(Im)) - 1
     % Load cell mesh from the test set (_primo)
-    [V_test, F_test] = read_ply(['\1. Estimating Individual Live Image Motion\1.6Error2\Cells\Test\primo0000' num2str(i) '.ply']);
+    [V_test, F_test] = read_ply(['\1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\Test\primo0000' num2str(i) '.ply']);
     line_test = fitLine3d(V_test);
     
     % Load corresponding cell mesh from the Ground Truth (_primo)
-    [V_gt, F_gt] = read_ply(['1. Estimating Individual Live Image Motion\1.6Error2\Cells\GT\primo' num2str(i) '.ply']);
+    [V_gt, F_gt] = read_ply(['1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\GT\primo' num2str(i) '.ply']);
     line_gt = fitLine3d(V_gt);
 
     % Calculate cosine similarity between test set and Ground Truth for _primo
     Cs(i, 1) = getCosineSimilarity(line_test(1, 4:6), line_gt(1, 4:6));
 
     % Load cell mesh from the test set (_ultimo)
-    [V_test, F_test] = read_ply(['\1. Estimating Individual Live Image Motion\1.6Error2\Cells\Test\ultimo0000' num2str(i) '.ply']);
+    [V_test, F_test] = read_ply(['\1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\Test\ultimo0000' num2str(i) '.ply']);
     line_test = fitLine3d(V_test);
     
     % Load corresponding cell mesh from the Ground Truth (_ultimo)
-    [V_gt, F_gt] = read_ply(['1. Estimating Individual Live Image Motion\1.6Error2\Cells\GT\ultimo' num2str(i) '.ply']);
+    [V_gt, F_gt] = read_ply(['1. EstimatingIndividualLiveImageMotion\1.6Error2\Cells\GT\ultimo' num2str(i) '.ply']);
     line_gt = fitLine3d(V_gt);
 
     % Calculate cosine similarity between test set and Ground Truth for _ultimo
