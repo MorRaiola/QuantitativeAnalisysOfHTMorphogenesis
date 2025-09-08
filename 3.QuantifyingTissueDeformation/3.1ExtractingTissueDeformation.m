@@ -8,6 +8,8 @@ clear; close all; clc;
 % Load the Excel file containing embryo stage information
 excelFilePath = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx';
 excelData = xlsread(excelFilePath);
+clusterFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+embryoFolder = '\\1. EstimatingIndividualLiveImageMotion\Embryo';
 
 % Process each entry in the Excel file
 for i = 1:size(excelData, 1)
@@ -17,8 +19,8 @@ for i = 1:size(excelData, 1)
     timeEnd = excelData(i, 4);
 
     % Define file paths
-    deformationFolder = (['\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster' num2str(clusterId) '\Deformation']);
-    dataFolder = fullfile(['\\1. EstimatingIndividualLiveImageMotion\Embryo' num2str(embryoId) '\Shapes\CC']);
+    deformationFolder = ([clusterFolder num2str(clusterId) '\Deformation']);
+    dataFolder = fullfile([embryoFolder num2str(embryoId) '\Shapes\CC']);
 
     % Load the initial and final node/face data
     [node1, face1] = loadMeshData(dataFolder, timeStart);
@@ -40,10 +42,11 @@ end
 clear; close all; clc;
 
 Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx');
+clusterFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 
 for cla = 1:size(Excel, 1)
     % File paths and variables
-    clusterPath = ['\1. EstimatingIndividualLiveImageMotion\Cluster' num2str(Excel(cla, 1))];
+    clusterPath = [clusterFolder num2str(Excel(cla, 1))];
     DataCC = fullfile(clusterPath, '3D', 'Embryo', [num2str(Excel(cla, 2)) '.ply']);
     Folder = fullfile(clusterPath, 'Deformation');
     embryo = Excel(cla, 2);
