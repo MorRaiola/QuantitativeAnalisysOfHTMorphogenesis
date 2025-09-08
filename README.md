@@ -72,7 +72,7 @@ The order of the code follows the order of Figure 1 in the paper.
 ### 1. Estimating Individual Live Image Motion
 
 #### 1.1 Image Preprocessing
-**Script:** [Preprocessing.m](./1.EstimatingIndividualLiveImageMotion/Preprocessing.m)
+**Script:** [Preprocessing.m](./1.EstimatingIndividualLiveImageMotion/1.1 Preprocessing.m)
 
 This step involves preprocessing 3D+t images:
 - Loading images via MIJ (MATLAB-ImageJ).
@@ -84,7 +84,7 @@ Embryo = '... \Embryo1\Data\Embryo1.tif'; % Raw Data
 Output = '... \Embryo1\Data'; % Resampled Data at 25%
 
 #### 1.2 MIRT Algorithm
-**Script:** [MIRT.m](./1.EstimatingIndividualLiveImageMotion/MIRT.m)
+**Script:** [MIRT.m](./1.EstimatingIndividualLiveImageMotion/1.2 MIRT.m)
 
 In this step, live images are registered using the MIRT3D algorithm:
 - Registration begins from the midpoint (N/2) of the time series (N = number of frames).
@@ -100,7 +100,7 @@ In this step, live images are registered using the MIRT3D algorithm:
 Output : *\\1. Estimating Individual Live Image Motion\\Embryo1\\ITK_Data*
 
 #### 1.4 Continuous Description of HT Morphogenesis
-**Script:** [ContinuousHTMorphogenesis.m](./1.EstimatingIndividualLiveImageMotion/ContinousHTMorphogenesis.m)
+**Script:** [ContinuousHTMorphogenesis.m](./1.EstimatingIndividualLiveImageMotion/1.4 ContinousHTMorphogenesis.m)
 
 This script creates a continuous description of HT morphogenesis:
 - Generate triangular meshes from the segmented heart tissue using the Iso2mesh toolbox.
@@ -109,14 +109,14 @@ This script creates a continuous description of HT morphogenesis:
 Output : *\\1. Estimating Individual Live Image Motion\\Embryo1\\Shape*
 
 #### 1.5 Validating Motion Estimation
-**Script:** [Error1.m](./1.EstimatingIndividualLiveImageMotion/error1.m)
+**Script:** [Error1.m](./1.EstimatingIndividualLiveImageMotion/1.5 Error1.m)
 
 This script evaluates the accuracy of motion estimation:
 - Compare manual tracking (ground truth) with the propagated tracking (punctual and sequential test sets).
 - Calculate the error in micrometers (µm) as the Eulerian distance.
 
 #### 1.6 Validating HT Morphogenesis Description
-**Script:** [Error2.m](./1.EstimatingIndividualLiveImageMotion/error2.m)
+**Script:** [Error2.m](./1.EstimatingIndividualLiveImageMotion/1.6 Error2.m)
 
 This script validates the accuracy of tracking cell division during morphogenesis:
 - Segment eight dividing cells during the morphogenesis of embryo e02 using ITK-SNAP.
