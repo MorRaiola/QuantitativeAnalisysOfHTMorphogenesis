@@ -162,7 +162,7 @@ This script validates the accuracy of tracking cell division during morphogenesi
 ### 3. Extracting Tissue Deformation
 
 #### 3.1 Individual Tissue Deformation
-**Script:** [ExtractingTissueDeformation.m](./3.QuantifyingTissueDeformation/ExtractingTissueDeformation.m)
+**Script:** [ATLASMotionProfile.m](./4.InSilicoFateMap/4.1ATLASMotionProfile.m)
 
 Extract the mesh deformation between the rest and deformed shapes Gr-Gr+1
 
