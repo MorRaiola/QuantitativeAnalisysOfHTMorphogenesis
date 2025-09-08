@@ -37,10 +37,10 @@ The order of the code follows the order of Figure 1 in the paper.
             <li><a href="#212-staging-system-modeling">2.1.2 Staging System Modeling</a></li>
           </ul>
         </li>
-        <li><a href="#22-spatial-mapping">2.2 Spatial Mapping</a>
+        <li><a href="#22-spatial-mapping">2.2 Registering Individual Shape into the Atlas Reference Geometry</a>
           <ul>
-            <li><a href="#221-rigid-registration-and-masking">2.2.1 Rigid Registration and Masking</a></li>
-            <li><a href="#222-validating-spatial-correspondences-between-atlas-and-live-shape">2.2.2 Validating Spatial Correspondences between ATLAS and Live-Shape</a></li>
+            <li><a href="#221-rigid-registration-and-masking">2.2 Spacial Mapping</a></li>
+            <li><a href="#222-validating-spatial-correspondences-between-atlas-and-live-shape">2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape</a></li>
           </ul>
         </li>
       </ul>
