@@ -7,9 +7,9 @@ javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\mij.jar'); % MIJ Java folde
 javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\ij-1.52i.jar'); % ImageJ JAR file
 
 % Load the time-lapse image data
-Embryo = '\1. EstimatingIndividualLiveImageMotion\Embryo1\Embryo1\Data\Embryo1.tif';
-transformationPath = '\1. EstimatingIndividualLiveImageMotion\Embryo1\disp.mat';
-outputMeshPath = '\1. EstimatingIndividualLiveImageMotion\Embryo1\Shapes\CC';
+Embryo = '\Code_Data\1. EstimatingIndividualLiveImageMotion\Embryo1\Embryo1\Data\Embryo1.tif';
+transformationPath = '\Code_Data\1. EstimatingIndividualLiveImageMotion\Embryo1\disp.mat';
+outputMeshPath = '\Code_Data\1. EstimatingIndividualLiveImageMotion\Embryo1\Shapes\CC';
 
 % Load the image data
 imp = ij.IJ.openImage(Embryo); % Load image (ensure RGB images are converted to grayscale for feature extraction)
