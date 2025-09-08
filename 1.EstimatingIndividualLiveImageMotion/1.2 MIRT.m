@@ -10,8 +10,8 @@ javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\mij.jar');
 javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\ij-1.52i.jar');
 
 % Load the time-lapse image data
-Embryo = 'S:\LAB_MT\RESULTADOS\Morena\Embryos\Embryo1\Data\Embryo1.tif';
-Output = 'S:\LAB_MT\RESULTADOS\Morena\Embryos\Embryo1\Data\';
+Embryo = '\1. Estimating Individual Live Image Motion\Embryo1\Data\Embryo1.tif';
+Output = '\1. Estimating Individual Live Image Motion\Embryo1';
 
 imp = ij.IJ.openImage(Embryo); 
 Im = ImagePlus2array(imp);
