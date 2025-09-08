@@ -2,7 +2,7 @@
 clear; close all; clc
 
 % Define the filename and read data from the Excel file
-filename = 'V:\PaperFigureData\Figure3_Integrating_Multiple_Live_Images_Into_A_Consensus_Spatio_Temporal_Reference\Figure3.xlsx';
+filename = '\Source_Data\Figure 3\Figure3.xlsx';
 GNB = readmatrix(filename, 'Sheet', 'B');  % Read data from the sheet named 'B'
 liveimages = readmatrix(filename, 'Sheet', 'C');  % Read data from the sheet named 'C'
 
