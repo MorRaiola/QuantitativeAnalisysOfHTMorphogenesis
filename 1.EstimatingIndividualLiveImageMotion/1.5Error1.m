@@ -8,7 +8,7 @@ javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\ij-1.52i.jar');
 
 % Define the base folder and embryo ID
 baseFolder = '\Source_Data\Figure 2\2F\25%\Validating the Motion Estimation\';
-imageFolder = '\1. EstimatingIndividualLiveImageMotion\';
+imageFolder = '\Code_Data\1. EstimatingIndividualLiveImageMotion\';
 embryoID = 1;
 
 % Load transformation data
