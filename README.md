@@ -143,7 +143,7 @@ This script validates the accuracy of tracking cell division during morphogenesi
 - Predict the staging grade (Gr) for each frame of each live image.
 - Among different equal-staged frames, consider only the one with the highest probability.
 
-#### 2.2 Spatial Mapping
+#### 2.2 Registering Individual Shape into the Atlas Reference Geometry
 **Script:** [SpatialMapping.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/2.2SpatialMapping.m)
 
 1. Perform rigid registration of Atlas to live-shape using the TGMM algorithm.
@@ -164,7 +164,7 @@ This script validates the accuracy of tracking cell division during morphogenesi
 
 ### 3. Extracting Tissue Deformation
 
-#### 3.1 Individual Tissue Deformation
+#### 3.1 Extracting Stepwise Tissue Deformation 
 **Script:** [ExtractingTissueDeformation.m](./3.QuantifyingTissueDeformation/3.1ExtractingTissueDeformation.m)
 
 Extract the mesh deformation between the rest and deformed shapes Gr-Gr+1.
@@ -174,10 +174,10 @@ Extract the mesh deformation between the rest and deformed shapes Gr-Gr+1.
 
 Plotting Deformation onto the ATLAS Shape using Face-to-Face Matching.
 
-#### 3.3 HT Cumulative Deformation
+#### 3.3 Calculating Cumulative Deformation
 **Script:** [HTCumulativeDeformation.m](./3.QuantifyingTissueDeformation/3.3HTCumulativeDeformation.m)
 
-### 4. In Silico Fate Map
+### 4. In-Silico Fate Map
 **Script:** [ATLASMotionProfile](./4.InSilicoFateMap/ATLASMotionProfile.m)
 
 Compute the dynamic ATLAS by combining the motion profiles of individual SurfaceMaps.
