@@ -2,13 +2,13 @@
 clear; close all; clc;
 
 % Read data from the Excel file
-Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
+Excel = xlsread('\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
 
 % Loop through each row in the Excel file
 for cla = 1:size(Excel, 1)
     
     % Define base folder and relevant paths
-    baseFolder = '\\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference';
+    baseFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference';
     clusterID = num2str(Excel(cla, 1));
     embryoID = num2str(Excel(cla, 2));
     
@@ -78,7 +78,7 @@ clear; close all; clc;
 clusters = [2, 3, 4, 5, 6, 7, 8, 9];
 
 % Base folder path for results
-baseFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReferencea';
+baseFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReferencea';
 outputBaseFolder = 'V:\CellReportsMethods_2024\Data\Figure4_Quantifying_Tissue_Deformation_During_Early_Morphogenesis';
 
 % Loop through each cluster
@@ -86,7 +86,7 @@ for clustIdx = 1:numel(clusters)
     clusterID = clusters(clustIdx);
     
     % Define file paths and names
-    dataFile = fullfile('\\Source_Data\Figure 3\3A', sprintf('Gr%d.ply', clusterID));
+    dataFile = fullfile('\Source_Data\Figure 3\3A', sprintf('Gr%d.ply', clusterID));
     deformationFolder = fullfile(baseFolder, sprintf('Cluster%d', clusterID), 'Deformation');
     outputFolder = fullfile(outputBaseFolder, sprintf('Gr%d', clusterID), 'StepWise');
    
