@@ -6,10 +6,10 @@
 clear; close all; clc;
 
 % Load the Excel file containing embryo stage information
-excelFilePath = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx';
+excelFilePath = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx';
 excelData = xlsread(excelFilePath);
-clusterFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
-embryoFolder = '\\1. EstimatingIndividualLiveImageMotion\Embryo';
+clusterFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+embryoFolder = '\Code_data\1. EstimatingIndividualLiveImageMotion\Embryo';
 
 % Process each entry in the Excel file
 for i = 1:size(excelData, 1)
@@ -41,8 +41,8 @@ end
 %% Smooth deformation in 20-pixel distance
 clear; close all; clc;
 
-Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx');
-clusterFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+Excel = xlsread('\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx');
+clusterFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 
 for cla = 1:size(Excel, 1)
     % File paths and variables
@@ -89,11 +89,11 @@ end
 clear; close all; clc;
 
 % Load the Excel data
-excelFile = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx';
+excelFile = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx';
 excelData = xlsread(excelFile); 
 
 % Define base folder paths
-baseFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference';
+baseFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference';
 outputBaseFolder = 'C:\Users\mraiola\Desktop\im\Gr';
 
 % Loop through each row in the Excel file
