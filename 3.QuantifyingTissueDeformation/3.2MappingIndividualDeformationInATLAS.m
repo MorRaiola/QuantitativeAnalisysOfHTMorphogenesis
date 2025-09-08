@@ -2,18 +2,18 @@
 clear; close all; clc;
 
 % Read data from the Excel file
-Excel = xlsread('\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx'); 
+Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx'); 
 
 % Loop through each row in the Excel file
 for cla = 1:size(Excel, 1)
     
     % Define base folder and relevant paths
-    baseFolder = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\';
+    baseFolder = '\\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference';
     clusterID = num2str(Excel(cla, 1));
     embryoID = num2str(Excel(cla, 2));
     
-    deformationFolder = fullfile(baseFolder, 'Mapping', ['Cluster', clusterID], 'Deformation');
-    atlasData = fullfile(baseFolder, 'Mapping', 'Atlas', ['remesh', clusterID, '.ply']);
+    deformationFolder = fullfile(baseFolder, ['Cluster', clusterID], 'Deformation');
+    atlasData = fullfile(baseFolder, 'Atlas', ['remesh', clusterID, '.ply']);
     outputFolder = fullfile('C:\Users\mraiola\Desktop\im\', ['Gr', clusterID], 'ATLAS\');
     
     % Create output directory if it doesn't exist
@@ -78,7 +78,7 @@ clear; close all; clc;
 clusters = [2, 3, 4, 5, 6, 7, 8, 9];
 
 % Base folder path for results
-baseFolder = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena';
+baseFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReferencea';
 outputBaseFolder = 'V:\CellReportsMethods_2024\Data\Figure4_Quantifying_Tissue_Deformation_During_Early_Morphogenesis';
 
 % Loop through each cluster
@@ -86,8 +86,8 @@ for clustIdx = 1:numel(clusters)
     clusterID = clusters(clustIdx);
     
     % Define file paths and names
-    dataFile = fullfile(baseFolder, 'Mapping', 'Atlas', sprintf('remesh%d.ply', clusterID));
-    deformationFolder = fullfile(baseFolder, 'Mapping', sprintf('Cluster%d', clusterID), 'Deformation');
+    dataFile = fullfile('\\Source_Data\Figure 3\3A', sprintf('Gr%d.ply', clusterID));
+    deformationFolder = fullfile(baseFolder, sprintf('Cluster%d', clusterID), 'Deformation');
     outputFolder = fullfile(outputBaseFolder, sprintf('Gr%d', clusterID), 'StepWise');
    
     % Read PLY file data
@@ -123,8 +123,8 @@ for clustIdx = 1:numel(clusters)
             embryoNum = embryoNum{1};
             
             % Load vertex correspondence files
-            idxCutFile = fullfile(baseFolder, 'Mapping', sprintf('Cluster%d', clusterID), 'VertexCorrespondence', sprintf('Embryo%s', embryoNum), 'IdxCUT.mat');
-            idxMatchFile = fullfile(baseFolder, 'Mapping', sprintf('Cluster%d', clusterID), 'VertexCorrespondence', sprintf('Embryo%s', embryoNum), 'IdxMatch.mat');
+            idxCutFile = fullfile(baseFolder, sprintf('Cluster%d', clusterID), 'VertexCorrespondence', sprintf('Embryo%s', embryoNum), 'IdxCUT.mat');
+            idxMatchFile = fullfile(baseFolder, sprintf('Cluster%d', clusterID), 'VertexCorrespondence', sprintf('Embryo%s', embryoNum), 'IdxMatch.mat');
             load(idxCutFile);
             load(idxMatchFile);
             
