@@ -7,46 +7,7 @@ This repository contains the MATLAB 2023b implementation of a workflow designed 
 The order of the code follows the order of Figure 1 in the paper.
 
 ## Quick Overview
-
-<details>
-  <summary><strong>Requirements</strong></summary>
-  <ul>
-    <li><a href="#software">Software</a></li>
-    <li><a href="#matlab-toolboxes">MATLAB Toolboxes</a></li>
-  </ul>
-</details>
-
-<details>
-  <summary><strong>Workflow Overview</strong></summary>
-  <ul>
-    <li><a href="#1-estimating-individual-live-image-motion">1. Estimating Individual Live Image Motion</a>
-      <ul>
-        <li><a href="#11-image-preprocessing">1.1 Image Preprocessing</a></li>
-        <li><a href="#12-mirt-algorithm">1.2 MIRT Algorithm</a></li>
-        <li><a href="#13-ht-segmentation">1.3 HT Segmentation</a></li>
-        <li><a href="#14-continuous-description-of-ht-morphogenesis">1.4 Continuous Description of HT Morphogenesis</a></li>
-        <li><a href="#15-validating-motion-estimation">1.5 Validating Motion Estimation</a></li>
-        <li><a href="#16-validating-ht-morphogenesis-description">1.6 Validating HT Morphogenesis Description</a></li>
-      </ul>
-    </li>
-    <li><a href="#2-integrating-multiple-live-images-into-a-consensus-temporal-reference">2. Integrating Multiple Live Images into a Consensus Temporal Reference</a>
-      <ul>
-        <li><a href="#21-staging-system">2.1 Staging System</a>
-          <ul>
-            <li><a href="#211-morphometric-feature-definition">2.1.1 Morphometric Feature Definition</a></li>
-            <li><a href="#212-staging-system-modeling">2.1.2 Staging System Modeling</a></li>
-          </ul>
-        </li>
-        <li><a href="#22-spatial-mapping">2.2 Registering Individual Shape into the Atlas Reference Geometry</a>
-          <ul>
-            <li><a href="#221-rigid-registration-and-masking">2.2 Spacial Mapping</a></li>
-            <li><a href="#222-validating-spatial-correspondences-between-atlas-and-live-shape">2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</details>
+<details> <summary><strong>Workflow Overview</strong></summary> <ul> <li><a href="#1-estimating-individual-live-image-motion">1. Estimating Individual Live Image Motion</a> <ul> <li><a href="#11-image-preprocessing">1.1 Image Preprocessing</a></li> <li><a href="#12-mirt-algorithm">1.2 MIRT Algorithm</a></li> <li><a href="#13-ht-segmentation">1.3 HT Segmentation</a></li> <li><a href="#14-continuous-description-of-ht-morphogenesis">1.4 Continuous Description of HT Morphogenesis</a></li> <li><a href="#15-validating-motion-estimation">1.5 Validating Motion Estimation</a></li> <li><a href="#16-validating-ht-morphogenesis-description">1.6 Validating HT Morphogenesis Description</a></li> </ul> </li> <li><a href="#2-integrating-multiple-live-images-into-a-consensus-temporal-reference">2. Integrating Multiple Live Images into a Consensus Temporal Reference</a> <ul> <li><a href="#21-staging-system">2.1 Staging System</a> <ul> <li><a href="#211-morphometric-feature-definition">2.1.1 Morphometric Feature Definition</a></li> <li><a href="#212-staging-system-modeling">2.1.2 Staging System Modeling</a></li> </ul> </li> <li><a href="#22-registering-individual-shape-into-the-atlas-reference-geometry">2.2 Registering Individual Shape into the Atlas Reference Geometry</a> <ul> <li><a href="#221-rigid-registration-and-masking">2.2 Rigid Registration and Masking</a></li> <li><a href="#222-validating-spatial-correspondences-between-atlas-and-live-shape">2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape</a></li> </ul> </li> </ul> </li> <li><a href="#3-extracting-tissue-deformation">3. Extracting Tissue Deformation</a> <ul> <li><a href="#31-extracting-stepwise-tissue-deformation">3.1 Extracting Stepwise Tissue Deformation</a></li> <li><a href="#32-mapping-individual-deformation-in-atlas">3.2 Mapping Individual Deformation In Atlas</a></li> <li><a href="#33-calculating-cumulative-deformation">3.3 Calculating Cumulative Deformation</a></li> </ul> </li> <li><a href="#4-in-silico-fate-map">4. In-Silico Fate Map</a></li> </ul> </details>
 
 ## Requirements
 
