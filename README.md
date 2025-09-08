@@ -96,6 +96,7 @@ In this step, live images are registered using the MIRT3D algorithm:
   - **Splanchnic Mesoderm:** Label = 2 (linked in the middle)
   - **Endoderm:** Label = 3
 - Export segmented images as NIFTI (.nii.gz) and reslice from the left using ImageJ, then save as .tif.
+
 Output : *\\1. Estimating Individual Live Image Motion\\Embryo1\\ITK_Data*
 
 #### 1.4 Continuous Description of HT Morphogenesis
