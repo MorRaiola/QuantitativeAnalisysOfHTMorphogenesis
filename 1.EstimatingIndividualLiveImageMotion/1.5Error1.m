@@ -7,14 +7,15 @@ javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\mij.jar');
 javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\ij-1.52i.jar');
 
 % Define the base folder and embryo ID
-baseFolder = 'S:\LAB_MT\RESULTADOS\Morena\Multiresolution\25%';
+baseFolder = '\Source_Data\Figure 2\2F\25%\Validating the Motion Estimation\';
+imageFolder = '\1. Estimating Individual Live Image Motion\';
 embryoID = 1;
 
 % Load transformation data
-load(fullfile(baseFolder, 'transformation.mat'), 'disp');
+load(fullfile(baseFolder, 'disp.mat'), 'disp');
 
 % Load manual tracking data from Imaris
-trackingFile = fullfile(baseFolder, 'Tracking', ['e' num2str(embryoID) '_Statistics'], 'Random_Detailed.csv');
+trackingFile = fullfile(baseFolder, 'Tracking', ['e' num2str(embryoID) '_Statistics'], 'GroundTruth.csv');
 Excel = xlsread(trackingFile);
 
 % Define parameters
@@ -24,7 +25,7 @@ voxelSize = resImage / downscaleFactor; % Factor to convert to micrometers
 cellDiameter = 20; % Diameter of a cardiomyocyte in µm
 
 % Load the image for validation
-imageFile = fullfile(baseFolder, 'Images', ['Embryo' num2str(embryoID) '.tif']);
+imageFile = fullfile(imageFolder, ['Embryo' num2str(embryoID)], 'Data, ['Embryo' num2str(embryoID) '.tif']);
 imp = ij.IJ.openImage(imageFile); 
 Im = squeeze(ImagePlus2array(imp));
 Im = Im(:,:,:,1); % Use the first time point
@@ -66,7 +67,7 @@ end
 toc
 
 % Save the results to CSV
-outputTestFile = fullfile(baseFolder, 'Tracking', ['e' num2str(embryoID) '_Statistics'], 'Test_Detailed.csv');
+outputTestFile = fullfile(baseFolder, 'Tracking', ['e' num2str(embryoID) '_Statistics'], 'Testset.csv');
 writetable(prop, outputTestFile);
 
 % Punctual error test set creation
