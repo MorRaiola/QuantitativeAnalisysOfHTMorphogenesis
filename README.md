@@ -106,6 +106,8 @@ This script creates a continuous description of HT morphogenesis:
 - Generate triangular meshes from the segmented heart tissue using the Iso2mesh toolbox.
 - Interpolate the mesh at time point T(N/2), both backward and forward in time, to produce a 3D+t mesh sequence describing continuous morphogenesis.
 
+Output : *\\1. Estimating Individual Live Image Motion\\Embryo1\\Shape*
+
 #### 1.5 Validating Motion Estimation
 **Script:** [Error1.m](./1.EstimatingIndividualLiveImageMotion/error1.m)
 
