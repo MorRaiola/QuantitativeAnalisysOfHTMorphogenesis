@@ -7,7 +7,7 @@
 clear all; close all; clc;
 
 % Directory containing the .ply files
-InDataDir = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\IsaacCollection';
+InDataDir = '\Source_Data\Figure 3\3A';
 
 % Get a list of all .ply files in the directory
 inFiles = dir(fullfile(InDataDir, '*.ply'));
