@@ -1,4 +1,4 @@
-%% 1.2 Estimating Individual Live Image Motion using Mirt3D Algorithm at t(N/2)
+%% 1.2Estimating Individual Live Image Motion using Mirt3D Algorithm at t(N/2)
 clear; close all; clc;
 
 % Get the folder path of the current script
