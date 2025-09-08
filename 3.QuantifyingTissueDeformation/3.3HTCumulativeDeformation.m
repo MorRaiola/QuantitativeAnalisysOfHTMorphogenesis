@@ -12,7 +12,7 @@ group_data = {
     'Cluster8', [12 24], 'Fill_24.tif'
 };
 
-baseFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
+baseFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
 
 for group_idx = 1:size(group_data, 1)
     clusterName = group_data{group_idx, 1};
@@ -51,7 +51,7 @@ group_data = {
     'Cluster8', [12], '24.tif'
 };
 
-baseFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference';
+baseFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference';
 
 for group_idx = 3:size(group_data, 1)
     clusterName = group_data{group_idx, 1};
@@ -109,7 +109,7 @@ group_data = {
     'Cluster8', [12], '24.tif'
 };
 
-baseFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference;
+baseFolder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference;
 
 % Main settings
 main.similarity = 'SSD';   % similarity measure, e.g. SSD, CC, SAD, RC, CD2, MS, MI
@@ -172,7 +172,7 @@ end
 
 
 %% Register Groups: Otput = Registered.ply
-Folder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
+Folder = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 % Register different groups
@@ -186,7 +186,7 @@ clear; close all; clc
 embryoSet = {[2 7 16 22 35 124], [24]};
 clusterSet = [4, 6];
 plyFileSet = {'27.ply', '27.ply'};
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 for i = 1:length(embryoSet)
@@ -213,7 +213,7 @@ clear;close all; clc
 embryo = [2,35,16,124,22];
 cluster = 4;
 anisotropy = 0;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 for e = 1:size(embryo,2)
@@ -274,7 +274,7 @@ clear;close all; clc
 embryo= [22,16,124];
 cluster = 3;
 anisotropy = 0;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 for e = 1:size(embryo,2)
@@ -331,7 +331,7 @@ clear;close all; clc
 embryo = [31,5];
 cluster = 3;
 anisotropy = 0;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 
@@ -438,7 +438,7 @@ clear;close all; clc
 embryo= [35,7];
 cluster = 5;
 anisotropy = 0;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 for e = 1:size(embryo,2)
@@ -509,7 +509,7 @@ end
 clear;close all; clc
 embryo= 27;
 cluster = 6;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 for e = 1:size(embryo,2)
@@ -537,7 +537,7 @@ end
 clear;close all; clc
 embryo= 24;
 cluster = 6;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 for e = 1:size(embryo,2)
@@ -566,7 +566,7 @@ clear;close all; clc
 embryo= 24;
 cluster = 7;
 anisotropy = 0;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 for e = 1:size(embryo,2)
@@ -636,7 +636,7 @@ clear;close all; clc
 embryo= 24;
 cluster = 8;
 anisotropy = 0;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 for e = 1:size(embryo,2)
@@ -731,7 +731,7 @@ clear;close all; clc
 embryo = 12;
 cluster = 8;
 anisotropy = 0;
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 
@@ -806,7 +806,7 @@ end
 %% 3. Sum deformation from Gr2
 clear;close all; clc
 
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 Group= [3,4,5,6,7,8,9];
@@ -847,7 +847,7 @@ group = [3, 4, 5, 6, 7, 8, 9];
 index = [22, 27, 27, 27, 24, 24, 12];
 
 % Base folder path for data
-FolderPre = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
+FolderPre = '\Code_data\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster';
 SubFolder = '\Deformation\DynamicAtlas\';
 
 
