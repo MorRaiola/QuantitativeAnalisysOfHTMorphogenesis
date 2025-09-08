@@ -1,11 +1,11 @@
 %% Validating Spatial Correspondences between ATLAS and Live-Shape
 
 % Define paths and filenames
-liveShapeFile = 'V:\Mapping\Cluster5\3D\Embryo\27.ply';
-atlasFile = 'V:\Mapping\Cluster5\3D\Atlas\27.ply';
-correspondenceFile = 'V:\Mapping\Cluster5\VertexCorrespondence\Embryo27\IdxCUT.mat';
-matchingFile = 'V:\Mapping\Cluster5\VertexCorrespondence\Embryo27\IdxMatch.mat';
-savePath = 'V:\Mapping\Cluster5\Deformation\';
+liveShapeFile = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster5\3D\Embryo\27.ply';
+atlasFile = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster5\3D\Atlas\27.ply';
+correspondenceFile = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster5\VertexCorrespondence\Embryo27\IdxCUT.mat';
+matchingFile = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster5\VertexCorrespondence\Embryo27\IdxMatch.mat';
+savePath = '\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster5\Deformation\';
 outputFile = 'indexSmooth27.mat';
 
 % Load live shape data
