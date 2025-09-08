@@ -6,7 +6,7 @@
 clear; close all; clc;
 
 % Load the Excel file containing embryo stage information
-excelFilePath = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx';
+excelFilePath = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx';
 excelData = xlsread(excelFilePath);
 
 % Process each entry in the Excel file
@@ -17,8 +17,8 @@ for i = 1:size(excelData, 1)
     timeEnd = excelData(i, 4);
 
     % Define file paths
-    deformationFolder = (['\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\Mapping\Cluster' num2str(clusterId) '\Deformation']);
-    dataFolder = fullfile(['\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\Embryos\Embryo' num2str(embryoId) '\Shapes\CC']);
+    deformationFolder = (['\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\Cluster' num2str(clusterId) '\Deformation']);
+    dataFolder = fullfile(['\\1. EstimatingIndividualLiveImageMotion\Embryo' num2str(embryoId) '\Shapes\CC']);
 
     % Load the initial and final node/face data
     [node1, face1] = loadMeshData(dataFolder, timeStart);
@@ -39,11 +39,11 @@ end
 %% Smooth deformation in 20-pixel distance
 clear; close all; clc;
 
-Excel = xlsread('F:\mappin\EmbryoStage.xlsx');
+Excel = xlsread('\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx');
 
 for cla = 1:size(Excel, 1)
     % File paths and variables
-    clusterPath = ['F:\mappin\Cluster' num2str(Excel(cla, 1))];
+    clusterPath = ['\1. EstimatingIndividualLiveImageMotion\Cluster' num2str(Excel(cla, 1))];
     DataCC = fullfile(clusterPath, '3D', 'Embryo', [num2str(Excel(cla, 2)) '.ply']);
     Folder = fullfile(clusterPath, 'Deformation');
     embryo = Excel(cla, 2);
@@ -86,11 +86,11 @@ end
 clear; close all; clc;
 
 % Load the Excel data
-excelFile = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\EmbryoStage.xlsx';
+excelFile = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference\EmbryoStage.xlsx';
 excelData = xlsread(excelFile); 
 
 % Define base folder paths
-baseFolder = '\\tierra.cnic.es\SC\LAB_MT\RESULTADOS\Morena\Mapping';
+baseFolder = '\\2. IntegratingMultipleLiveImagesIntoAConsensusTemporalReference';
 outputBaseFolder = 'C:\Users\mraiola\Desktop\im\Gr';
 
 % Loop through each row in the Excel file
