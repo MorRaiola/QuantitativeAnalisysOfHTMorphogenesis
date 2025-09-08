@@ -68,4 +68,4 @@ end
 toc
 
 % Save the displacement field results
-save([Output 'transformation.mat'], 'disp2');
+save([Output 'disp.mat'], 'disp2');
