@@ -131,20 +131,20 @@ This script validates the accuracy of tracking cell division during morphogenesi
 #### 2.1 Staging System
 
 ##### 2.1.1 Morphometric Feature Definition
-**Script:** [FeatureExtraction.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/FeatureExtraction.m)
+**Script:** [FeatureExtraction.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/2.1.1FeatureExtraction.m)
 
 - Manually select the points pt1-pt2-pt3-pt4 following the rules reported in the manuscript.
 - Compute the Eulerian distances between the points, followed by the height/width (h/w) computation.
 
 ##### 2.1.2 Staging System Modeling
-**Script:** [StagingSystem.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/StagingSystem.m)
+**Script:** [StagingSystem.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/StagingSystem/2.1.2StagingSystem.m)
 
 - Build a Gaussian Naive Bayesian classifier on h/w Atlas features.
 - Predict the staging grade (Gr) for each frame of each live image.
 - Among different equal-staged frames, consider only the one with the highest probability.
 
 #### 2.2 Spatial Mapping
-**Script:** [SpatialMapping.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/SpatialMapping.m)
+**Script:** [SpatialMapping.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/2.2SpatialMapping.m)
 
 1. Perform rigid registration of Atlas to live-shape using the TGMM algorithm.
 2. Manually cut Atlas missing parts in MeshLab ((*)_Cut.ply) and fill gaps in MeshLab ((*)_Cut.ply).
@@ -157,7 +157,7 @@ This script validates the accuracy of tracking cell division during morphogenesi
 9. Perform face-to-face matching between live-shape and ATLAS_Cut. Return IdxCUT.mat (closest point in Atlas for each point in ATLAS_Cut) and IdxMatch.mat (closest point in Mapped for each point in Atlas (IdxCut)).
 
 ##### 2.2.1 Validating Spatial Correspondences between ATLAS and Live-Shape
-**Script:** [Validation.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/Validation.m)
+**Script:** [Validation.m](./2.IntegratingMultipleLiveImagesIntoAConsensusTemporalReference/SpatialMapping/2.2.1Validation.m)
 
 - Validate spatial correspondences between Atlas and live-shape.
 - Compute the live-shape area mesh and map face-to-face values into the Atlas.
@@ -165,11 +165,21 @@ This script validates the accuracy of tracking cell division during morphogenesi
 ### 3. Extracting Tissue Deformation
 
 #### 3.1 Individual Tissue Deformation
-**Script:** [ATLASMotionProfile.m](./4.InSilicoFateMap/4.1ATLASMotionProfile.m)
+**Script:** [ExtractingTissueDeformation.m](./3.QuantifyingTissueDeformation/3.1ExtractingTissueDeformation.m)
 
-Extract the mesh deformation between the rest and deformed shapes Gr-Gr+1
+Extract the mesh deformation between the rest and deformed shapes Gr-Gr+1.
+
+#### 3.2 Mapping Individual Deformation In Atlas
+**Script:** [MappingIndividualDeformationInATLAS.m](./3.QuantifyingTissueDeformation/3.2MappingIndividualDeformationInATLAS.m)
+
+Plotting Deformation onto the ATLAS Shape using Face-to-Face Matching.
+
+#### 3.3 HT Cumulative Deformation
+**Script:** [HTCumulativeDeformation.m](./3.QuantifyingTissueDeformation/3.3HTCumulativeDeformation.m)
+
+Concatenating single live-image motion profiles into the Atlas.
 
 ### 4. In Silico Fate Map
-**Script:** [ExtractingTissueDeformation.m](./4.InSilicoFateMap/ATLASMotionProfile.m)
+**Script:** [ATLASMotionProfile](./4.InSilicoFateMap/ATLASMotionProfile.m)
 
 Compute the dynamic ATLAS by combining the motion profiles of individual SurfaceMaps.
