@@ -66,6 +66,9 @@ The order of the code follows the order of Figure 1 in the paper.
 - [Meshes3d](https://github.com/mattools/matGeom)
 - [Geodesic MATLAB Master](https://es.mathworks.com/matlabcentral/fileexchange/18168-exact-geodesic-for-triangular-meshes)
 - [ObjWriter](https://github.com/JBKacerovsky/objWriter?tab=readme-ov-file)
+- 
+### DATA
+The dataset used in this project is publicly available on Mendeley Data 
 
 ## Workflow Overview
 
