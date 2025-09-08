@@ -10,8 +10,8 @@ javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\mij.jar'); % MIJ Java folde
 javaaddpath('C:\Program Files\MATLAB\R2020a\java\jar\ij-1.52i.jar'); % ImageJ JAR file
 
 % Define input and output paths
-Embryo = '... \1. EstimatingIndividualLiveImageMotion\Embryo1\Data\Embryo1.tif'; % Path to the live image file
-Output = '... \1. EstimatingIndividualLiveImageMotion\Embryo1\Data\'; % Output directory
+Embryo = '... \Code_Data\1. EstimatingIndividualLiveImageMotion\Embryo1\Data\Embryo1.tif'; % Path to the live image file
+Output = '... \Code_Data\1. EstimatingIndividualLiveImageMotion\Embryo1\Data\'; % Output directory
 
 % Load the image using ImageJ
 imp = ij.IJ.openImage(Embryo);
