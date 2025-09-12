@@ -140,6 +140,6 @@ Plotting Deformation onto the ATLAS Shape using Face-to-Face Matching.
 **Script:** [HTCumulativeDeformation.m](./3.QuantifyingTissueDeformation/3.3HTCumulativeDeformation.m)
 
 ### 4. In-Silico Fate Map
-**Script:** [ATLASMotionProfile.m](./4.InSilicoFateMap/ATLASMotionProfile.m)
+**Script:** [ATLASMotionProfile.m](./4.InSilicoFateMap/4.1ATLASMotionProfile.m)
 
 Compute the dynamic ATLAS by combining the motion profiles of individual SurfaceMaps.
